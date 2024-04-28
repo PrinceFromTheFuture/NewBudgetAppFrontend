@@ -20,6 +20,9 @@ const actionsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllTransactions.fulfilled, (state, action) => {
+      if (!state) {
+        console.log("f");
+      }
       return action.payload;
     });
   },

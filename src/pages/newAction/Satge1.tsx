@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/drawer";
 import { useAppSelector } from "@/hooks";
 import { getAllBudgetsSelector } from "@/redux/userDataSlice";
-import { useNavigate } from "react-router-dom";
 
 interface stage1PropsInterface {
   stage: number;

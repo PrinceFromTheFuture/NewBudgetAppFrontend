@@ -1,7 +1,6 @@
 // MultiStageForm.js
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Satge1 from "./Satge1";
 import Satge2 from "./Stage2";
 import Satge3 from "./Stage3";

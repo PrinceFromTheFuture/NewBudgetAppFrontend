@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/tooltip";
 import { useAppSelector } from "@/hooks";
 import { getAllBudgetsSelector } from "@/redux/userDataSlice";
-import React from "react";
 
 const Spendings = () => {
   const allBudgets = useAppSelector(getAllBudgetsSelector);
@@ -24,7 +23,7 @@ const Spendings = () => {
           .map((budget) => budget.scheduled - budget.spent)
           .reduce((first, second) => first + second);
   return (
-    <Card className="w-[20%] h-fit">
+    <Card className="w-[20%] ">
       <CardHeader>
         <CardTitle>Spendings </CardTitle>
         <CardDescription className=" text-DimGray">

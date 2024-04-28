@@ -1,35 +1,21 @@
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   getAllBudgets,
   getAllBudgetsSelector,
   getBudgetTimeFrameSelector,
 } from "@/redux/userDataSlice";
-import { budgetInterface } from "@/types";
 import axios from "axios";
 import dayjs from "dayjs";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Spendings from "./Spendings";
 import BudegtsDistribution from "./BudgetsDistribution";
 

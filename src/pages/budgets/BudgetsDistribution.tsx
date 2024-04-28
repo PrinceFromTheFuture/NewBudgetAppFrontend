@@ -1,20 +1,9 @@
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, ArcOptions } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
-import { getAllTransactionsSelector } from "@/redux/actionsSlice";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { getAllBudgetsSelector } from "@/redux/userDataSlice";
-import { actionInteface } from "@/types";
-import { useState } from "react";
-import dayjs from "dayjs";
 
 ChartJS.register(ArcElement, Tooltip);
 

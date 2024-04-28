@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { actionInteface } from "@/types";
 import dayjs from "dayjs";
-import React from "react";
 
 interface actionPropsInterface {
   action: actionInteface;
