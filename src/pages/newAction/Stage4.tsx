@@ -67,6 +67,7 @@ const Satge4 = ({
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              e.preventDefault();
               nextStage();
             }
           }}
