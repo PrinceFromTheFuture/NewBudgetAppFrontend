@@ -1,15 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { dummyData } from "./dummyActions";
 import { actionInteface } from "@/types";
+import axios from "axios";
 
-const initialState: actionInteface[] = dummyData || [];
+export const getAllTransactions = createAsyncThunk(
+  "actions/getAll",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BASE_API}/transactions`
+    );
+    return response.data;
+  }
+);
+const initialState: actionInteface[] = [];
 
 const actionsSlice = createSlice({
   name: "actions",
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getAllTransactions.fulfilled, (state, action) => {
+      return action.payload;
+    });
+  },
 });
 
 export const actionsReducer = actionsSlice.reducer;
-export const getAllActions = (state: RootState) => state.actions;
+export const getAllTransactionsSelector = (state: RootState) => state.actions;

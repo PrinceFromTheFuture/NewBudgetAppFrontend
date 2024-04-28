@@ -1,12 +1,12 @@
 import StageWraper from "./StageWraper";
-import { newActionFormInteface } from "@/types";
+import { actionInteface } from "@/types";
 import { useEffect, useRef } from "react";
 
 interface stage4PropsInterface {
   stage: number;
-  formData: newActionFormInteface;
+  formData: actionInteface;
   updateFormFiled: (
-    field: keyof newActionFormInteface, // Use keyof to ensure field matches keys of newActionFormInteface
+    field: keyof actionInteface, // Use keyof to ensure field matches keys of newActionFormInteface
     value: string | number
   ) => void;
   nextStage: () => void;

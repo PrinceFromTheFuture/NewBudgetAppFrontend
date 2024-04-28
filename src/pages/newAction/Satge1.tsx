@@ -1,16 +1,19 @@
 import StageWraper from "./StageWraper";
-import { newActionFormInteface } from "@/types";
+import { actionInteface } from "@/types";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useAppSelector } from "@/hooks";
+import { getAllBudgetsSelector } from "@/redux/userDataSlice";
+import { useNavigate } from "react-router-dom";
 
 interface stage1PropsInterface {
   stage: number;
   updateFormFiled: (
-    field: keyof newActionFormInteface, // Use keyof to ensure field matches keys of newActionFormInteface
+    field: keyof actionInteface, // Use keyof to ensure field matches keys of actionInteface
     value: string | number
   ) => void;
   nextStage: () => void;
@@ -21,16 +24,8 @@ const Satge1 = ({
   nextStage,
   updateFormFiled,
 }: stage1PropsInterface) => {
-  const budgets = [
-    { name: "test", color: "#FFA26F" },
-    { name: "test", color: "#FFA26F" },
-    { name: "test", color: "#FFA26F" },
-    { name: "test", color: "#FFA26F" },
-    { name: "test", color: "#FFA26F" },
-    { name: "test", color: "#FFA26F" },
-    { name: "test", color: "#FFA26F" },
-    { name: "test", color: "#FFA26F" },
-  ];
+  const budgets = useAppSelector(getAllBudgetsSelector);
+
   return (
     <StageWraper stage={1} currentStage={stage}>
       <div className="flex flex-col justify-normal items-center w-full">
@@ -75,34 +70,36 @@ const Satge1 = ({
               </div>
             </div>
           </DrawerTrigger>
-          <DrawerContent className=" w-full p-3">
-            <div className="text-3xl mb-5 ml-5 font-extrabold text-RichGray mt-5">
-              Choose Your Outcome budget
+          <DrawerContent className=" w-full p-3 flex justify-center flex-col items-center ">
+            <div className="max-w-[800px]">
+              <div className="text-3xl mb-5 ml-5 font-extrabold text-RichGray mt-5 ">
+                Choose Your Outcome budget
+              </div>
+              <div className="mt-4  flex justify-between flex-wrap w-full gap-y-5 ">
+                {budgets.map((budget) => {
+                  return (
+                    <DrawerClose
+                      onClick={() => {
+                        updateFormFiled("budget", budget.name);
+                        nextStage();
+                      }}
+                      className="p-2.5 w-[48%] bg-RichGray hover:bg-DeepGray rounded-lg flex justify-center items-center gap-2 hover:border  transition-all "
+                    >
+                      <div
+                        className=" w-3 h-3 rounded-full"
+                        style={{ backgroundColor: budget.color }}
+                      ></div>
+                      <div className=" text-lg text-White font-semibold ">
+                        {budget.name}
+                      </div>
+                    </DrawerClose>
+                  );
+                })}
+              </div>
+              <DrawerClose className="p-4 w-full bg-DeepGray rounded-xl mt-6 flex justify-center items-center gap-2 hover:border  transition-all text-lg font-semibold text-White ">
+                Close
+              </DrawerClose>
             </div>
-            <div className="mt-4  flex justify-between flex-wrap w-full gap-y-5 ">
-              {budgets.map((budget) => {
-                return (
-                  <DrawerClose
-                    onClick={() => {
-                      updateFormFiled("budget", budget.name);
-                      nextStage();
-                    }}
-                    className="p-2.5 w-[48%] bg-RichGray hover:bg-DeepGray rounded-lg flex justify-center items-center gap-2 hover:border  transition-all "
-                  >
-                    <div
-                      className=" w-3 h-3 rounded-full"
-                      style={{ backgroundColor: budget.color }}
-                    ></div>
-                    <div className=" text-lg text-White font-semibold ">
-                      {budget.name}
-                    </div>
-                  </DrawerClose>
-                );
-              })}
-            </div>
-            <DrawerClose className="p-4 w-full bg-DeepGray rounded-xl mt-6 flex justify-center items-center gap-2 hover:border  transition-all text-lg font-semibold text-White ">
-              Close
-            </DrawerClose>
           </DrawerContent>
         </Drawer>
       </div>

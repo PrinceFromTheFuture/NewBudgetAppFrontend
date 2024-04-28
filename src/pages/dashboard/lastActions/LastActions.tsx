@@ -6,17 +6,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
-import { getAllActions } from "@/redux/actionsSlice";
+import { getAllTransactionsSelector } from "@/redux/actionsSlice";
 import Action from "./Action";
 
 const LastActions = () => {
-  const allActions = useAppSelector(getAllActions);
+  const allActions = useAppSelector(getAllTransactionsSelector);
   return (
     <Card className="w-[70%] ">
       <CardHeader>
         <CardTitle>Last 5 Actions</CardTitle>
         <CardDescription className=" text-DimGray">
-          3761 Actions made
+          {allActions.length} Actions made
         </CardDescription>
       </CardHeader>
       <CardContent className="w-full">

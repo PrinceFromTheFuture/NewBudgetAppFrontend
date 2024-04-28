@@ -7,12 +7,16 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import { NewAction } from "./pages/newAction/NewAction.tsx";
+import Budgets from "./pages/budgets/Budgets.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    children: [{ path: "/dashboard", element: <Dashboard /> }],
+    children: [
+      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/budgets", element: <Budgets /> },
+    ],
   },
   {
     path: "/newAction",

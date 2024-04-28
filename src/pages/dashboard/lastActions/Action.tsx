@@ -9,7 +9,12 @@ interface actionPropsInterface {
 const Action = ({ action }: actionPropsInterface) => {
   return (
     <tr className=" rounded-full hover:bg-DimGray transition-all cursor-pointer ">
-      <th className="font-semibold">{action.title}</th>
+      <th className="font-semibold">
+        {" "}
+        {action.title.length > 20
+          ? action.title.substring(0, 20) + "..."
+          : action.title}
+      </th>
       <th className="font-semibold">
         <div
           className={cn(
@@ -26,7 +31,7 @@ const Action = ({ action }: actionPropsInterface) => {
       </th>
       <th className="font-bold text-Purple ">{action.amount}₪</th>
 
-      <th className="font-semibold"> {action.budget.name}</th>
+      <th className="font-semibold"> {action.budget}</th>
       <th className="font-semibold">{action.source}</th>
     </tr>
   );

@@ -1,24 +1,18 @@
+import { useAppSelector } from "@/hooks";
 import StageWraper from "./StageWraper";
-import { newActionFormInteface } from "@/types";
+import { actionInteface } from "@/types";
+import { getAllSourcesSelector } from "@/redux/userDataSlice";
 
 interface stage3PropsInterface {
   stage: number;
   updateFormFiled: (
-    field: keyof newActionFormInteface, // Use keyof to ensure field matches keys of newActionFormInteface
+    field: keyof actionInteface, // Use keyof to ensure field matches keys of newActionFormInteface
     value: string | number
   ) => void;
 }
 
 const Satge5 = ({ stage, updateFormFiled }: stage3PropsInterface) => {
-  const sources = [
-    { name: "test", color: "#FFA26F", balance: 324 },
-    { name: "test", color: "#FFA26F", balance: 324 },
-    { name: "test", color: "#FFA26F", balance: 324 },
-    { name: "test", color: "#FFA26F", balance: 324 },
-    { name: "test", color: "#FFA26F", balance: 324 },
-    { name: "test", color: "#FFA26F", balance: 324 },
-    { name: "test", color: "#FFA26F", balance: 324 },
-  ];
+  const sources = useAppSelector(getAllSourcesSelector);
 
   return (
     <StageWraper stage={5} currentStage={stage}>
@@ -41,7 +35,7 @@ const Satge5 = ({ stage, updateFormFiled }: stage3PropsInterface) => {
                   </div>
                 </div>
                 <div
-                  className=" w-[80%] rounded font-bold text-sm text-White flex justify-center items-center"
+                  className=" w-[80%] rounded font-bold text-sm p-0.5 text-DeepGray flex justify-center items-center"
                   style={{ backgroundColor: source.color }}
                 >
                   {source.name}

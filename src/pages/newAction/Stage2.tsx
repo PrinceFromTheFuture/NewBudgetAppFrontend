@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils";
 import StageWraper from "./StageWraper";
-import { newActionFormInteface } from "@/types";
+import { actionInteface } from "@/types";
 import { useEffect, useRef, useState } from "react";
 
 interface stage2PropsInterface {
   stage: number;
-  formData: newActionFormInteface;
+  formData: actionInteface;
   updateFormFiled: (
-    field: keyof newActionFormInteface, // Use keyof to ensure field matches keys of newActionFormInteface
+    field: keyof actionInteface, // Use keyof to ensure field matches keys of newActionFormInteface
     value: string | number
   ) => void;
   nextStage: () => void;
@@ -48,6 +48,7 @@ const Satge2 = ({
           name="amount"
           id="amount"
           ref={inputRef}
+          placeholder="0.00"
           style={{ position: "absolute", left: "-9999px" }}
           value={formData.amount}
           onChange={(e) => updateFormFiled("amount", e.target.value)}

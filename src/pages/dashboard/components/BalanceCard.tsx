@@ -14,14 +14,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAppSelector } from "@/hooks";
-import { getBalances, getTodaysProfit } from "@/redux/userDataSlice";
+import {
+  getBalancesSelector,
+  getTodaysProfitSelector,
+} from "@/redux/userDataSlice";
 import { useState } from "react";
 
 const BalanceCard = () => {
   const [isNet, setIsNet] = useState(false);
 
-  const userBalances = useAppSelector(getBalances);
-  const todayProfit = useAppSelector(getTodaysProfit);
+  const userBalances = useAppSelector(getBalancesSelector);
+  const todayProfit = useAppSelector(getTodaysProfitSelector);
 
   return (
     <Card className="bg-Purple w-[350px] h-[270px]">

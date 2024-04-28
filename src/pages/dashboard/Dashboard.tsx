@@ -1,6 +1,6 @@
 import BalanceCard from "./components/BalanceCard";
 import LastActions from "./lastActions/LastActions";
-import Chart from "./Chart";
+import Chart from "./components/Chart";
 
 const Dashboard = () => {
   return (
