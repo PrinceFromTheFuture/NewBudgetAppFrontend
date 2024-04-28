@@ -34,14 +34,14 @@ export const NewAction = () => {
     title: string;
     type: "income" | "outcome" | "transaction";
     date: string;
-    amount: number;
+    amount: number | undefined;
     budget: string;
     source: string;
   }>({
     title: "",
     source: "",
     budget: "",
-    amount: 0,
+    amount: undefined,
     date: new Date().toLocaleString(),
     type: "income",
   });
@@ -102,12 +102,7 @@ export const NewAction = () => {
             stage={stage}
           />
 
-          <Satge3
-            stage={stage}
-            nextStage={nextStage}
-            formData={formData}
-            updateFormFiled={updateFormFiled}
-          />
+          <Satge3 stage={stage} updateFormFiled={updateFormFiled} />
           <Satge4
             stage={stage}
             nextStage={nextStage}
@@ -115,7 +110,12 @@ export const NewAction = () => {
             updateFormFiled={updateFormFiled}
           />
 
-          <Satge5 stage={stage} updateFormFiled={updateFormFiled} />
+          <Satge5
+            formData={formData}
+            nextStage={nextStage}
+            stage={stage}
+            updateFormFiled={updateFormFiled}
+          />
         </div>
       </div>
       <div className="flex gap-2">

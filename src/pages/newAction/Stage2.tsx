@@ -1,11 +1,18 @@
-import { cn } from "@/lib/utils";
 import StageWraper from "./StageWraper";
 import { actionInteface } from "@/types";
-import { useEffect, useRef, useState } from "react";
+import dayjs from "dayjs";
+import { useRef } from "react";
 
 interface stage2PropsInterface {
   stage: number;
-  formData: actionInteface;
+  formData: {
+    title: string;
+    type: "income" | "outcome" | "transaction";
+    date: string;
+    amount: number | undefined;
+    budget: string;
+    source: string;
+  };
   updateFormFiled: (
     field: keyof actionInteface, // Use keyof to ensure field matches keys of newActionFormInteface
     value: string | number
@@ -21,61 +28,47 @@ const Satge2 = ({
 }: stage2PropsInterface) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleLabelClick = () => {
-    if (inputRef.current !== null) inputRef.current.focus();
-  };
-
-  const [isFocused, setIsFocused] = useState(false);
-
-  useEffect(() => {
-    if (stage === 2) {
-      if (inputRef.current !== null) inputRef.current.focus();
-    } else {
-      if (inputRef.current !== null) inputRef.current.blur();
-    }
-  }, [stage]);
-
   return (
     <StageWraper stage={2} currentStage={stage}>
       <div className="flex flex-col justify-normal items-center w-full">
         <div className="text-3xl mb-5 ml-5 font-extrabold">
-          {formData.type === "outcome"
-            ? "And How Much Did Your Transation Cost?"
-            : "And How Much Did You Earn?"}
+          When did your Action occured?
         </div>
         <input
-          type="number"
-          name="amount"
-          id="amount"
-          ref={inputRef}
-          placeholder="0.00"
           style={{ position: "absolute", left: "-9999px" }}
-          value={formData.amount}
-          onChange={(e) => updateFormFiled("amount", e.target.value)}
-          onFocus={() => {
-            setIsFocused(true);
-          }}
-          onBlur={() => {
-            setIsFocused(false);
-          }}
+          type="datetime-local"
+          name="date"
+          id="date"
+          ref={inputRef}
+          onChange={(e) => updateFormFiled("date", e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === "Set") {
               nextStage();
             }
           }}
+          value={formData.date}
         />
-        <div
-          className={cn(
-            "text-3xl font-bold bg-RichGray rounded-xl p-5 transition-all",
-            isFocused && "border-2 border-DimGray "
-          )}
-          onClick={handleLabelClick}
-        >
-          {formData.amount}
-          <span className=" text-3xl">₪</span>
-        </div>
-        <div className=" p-1 px-4  bg-RichGray  text-sm  font-bold rounded-full mt-4">
-          ILS ₪
+        <div className=" w-full flex justify-between items-center gap-3 h-20">
+          <div className="h-full w-full bg-RichGray rounded-lg  flex justify-start items-center">
+            <div className="flex justify-start items-center">
+              <div className=" h-8 w-8 bg-Purple ml-4"></div>
+              <div className="ml-2">
+                {" "}
+                <div className="text-White text-md font-extrabold">
+                  {dayjs(formData.date).format("DD/MM/YYYY HH:mm")}
+                </div>
+                <div className=" text-FadedGray text-sm font-bold">
+                  Calender
+                </div>
+              </div>
+            </div>
+          </div>
+          <label
+            className="   rounded-lg bg-Purple h-20 w-20 flex items-center justify-center"
+            htmlFor="date"
+          >
+            Date
+          </label>
         </div>
       </div>
     </StageWraper>
