@@ -48,7 +48,8 @@ const Spendings = () => {
                       className=" font-semibold text-md mb-1 "
                       style={{ color: bugdet.color }}
                     >
-                      {(bugdet.spent / bugdet.scheduled) * 100}% {bugdet.name}{" "}
+                      {((bugdet.spent / bugdet.scheduled) * 100).toFixed(1)}%{" "}
+                      {bugdet.name}{" "}
                       {bugdet.spent / bugdet.scheduled > 1 && "!!!"}
                     </div>
                     <div className="w-full h-2 bg-DimGray rounded-full">
