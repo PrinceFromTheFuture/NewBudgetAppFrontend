@@ -97,7 +97,7 @@ const NewBudget = () => {
     <AlertDialog>
       <AlertDialogTrigger className=" bg-RichGray p-2 px-4 text-White font-semibold text-lg rounded-lg cursor-pointer hover:bg-DimGray transition-all">
         {" "}
-        create new budget
+        plan new budget
       </AlertDialogTrigger>
       <AlertDialogContent className="select-none">
         <AlertDialogHeader>
@@ -175,7 +175,7 @@ const NewBudget = () => {
                   <div className=" flex justify-between items-center w-full gap-10 mt-6">
                     <div className="text-lg font-medium">Scheduled Amount ₪</div>
                     <input
-                      min={0}
+                      min={1}
                       onChange={(e) => {
                         handleFiledChange(category.id, "scheduled", e.target.value);
                       }}

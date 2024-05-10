@@ -1,16 +1,17 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
 import { getAllTransactionsSelector } from "@/redux/actionsSlice";
 import Action from "./Action";
+import dayjs from "dayjs";
 
 const LastActions = () => {
   const allActions = useAppSelector(getAllTransactionsSelector);
+  const sortedActions = allActions
+    .slice()
+    .sort((action1, action2) => {
+      return dayjs(action1.date).diff(dayjs(action2.date));
+    })
+    .reverse();
   return (
     <Card className="w-[70%] ">
       <CardHeader>
@@ -29,7 +30,7 @@ const LastActions = () => {
             <th>Budget</th>
             <th>Source</th>
           </tr>
-          {allActions.map((action, index) => {
+          {sortedActions.map((action, index) => {
             if (index <= 5) {
               return <Action action={action} />;
             } else {

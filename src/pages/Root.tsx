@@ -29,12 +29,10 @@ function Root() {
         withCredentials: true,
       });
       if (!response.data.username) {
-        console.log(response.data.username);
         navigate("/login");
 
         return;
       }
-      console.log(response.data.username);
 
       dispatch(login(response.data.username as string));
     };

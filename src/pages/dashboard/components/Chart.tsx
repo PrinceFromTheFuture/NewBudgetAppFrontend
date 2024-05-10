@@ -114,7 +114,9 @@ const Chart = () => {
       <CardContent className="w-full flex flex-col justify-center items-center">
         <div className="  flex justify-center items-center w-[50%] relative">
           <Doughnut options={options} data={data}></Doughnut>
-          <div className=" absolute text-White text-2xl font-semibold">{totalSpent}₪</div>
+          <div className=" absolute text-White text-2xl font-semibold">
+            {totalSpent.toFixed(2)}₪
+          </div>
         </div>
         <div className=" mt-12  flex flex-wrap w-full ">
           {chartBudgets.map((budget) => {

@@ -7,9 +7,10 @@ import Satge5 from "./Stage5";
 import Satge4 from "./Stage4";
 import { actionInteface } from "@/types";
 import axios from "axios";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { getAllTransactions } from "@/redux/actionsSlice";
 import { useNavigate } from "react-router-dom";
+import { getCurrentBudget } from "@/redux/userDataSlice";
 
 export const NewAction = () => {
   const navigate = useNavigate();
@@ -58,20 +59,22 @@ export const NewAction = () => {
   };
 
   const handlePostNewTransaction = async () => {
-    await axios.post(`${import.meta.env.VITE_BASE_API}/transactions`, formData);
+    await axios.post(`${import.meta.env.VITE_BASE_API}/transactions`, formData, {
+      withCredentials: true,
+    });
     dispatch(getAllTransactions());
     navigate(-1);
   };
-
+  const budget = useAppSelector((state) => getCurrentBudget(state));
+  if (!budget) {
+    return <div>you have not create any budget yet!</div>;
+  }
   return (
     <div className="transition-all fixed right-0 top-0 bottom-0 left-0 bg-DeepGray overflow-hidden text-White  flex  flex-col justify-between p-3 select-none ">
       <div>
         {" "}
         <div className="w-full flex justify-start items-center">
-          <div
-            onClick={() => navigate(-1)}
-            className="p-3 bg-RichGray rounded cursor-pointer"
-          >
+          <div onClick={() => navigate(-1)} className="p-3 bg-RichGray rounded cursor-pointer">
             Back
           </div>
         </div>
@@ -91,11 +94,7 @@ export const NewAction = () => {
             width: `500%`,
           }}
         >
-          <Satge1
-            stage={stage}
-            updateFormFiled={updateFormFiled}
-            nextStage={nextStage}
-          />
+          <Satge1 stage={stage} updateFormFiled={updateFormFiled} nextStage={nextStage} />
           <Satge2
             nextStage={nextStage}
             formData={formData}
