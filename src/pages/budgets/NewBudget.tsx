@@ -7,22 +7,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useAppDispatch } from "@/hooks";
-import { getAllBudgets, submitNewBudget } from "@/redux/userDataSlice";
-import { BudgetCategory } from "@/types";
+import { submitNewBudget } from "@/redux/userDataSlice";
 import { PopoverClose } from "@radix-ui/react-popover";
-import axios from "axios";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const NewBudget = () => {
   const colors = [

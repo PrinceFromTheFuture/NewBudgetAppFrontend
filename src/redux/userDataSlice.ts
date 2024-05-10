@@ -1,9 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState, store } from "./store";
+import { RootState } from "./store";
 import { budgetInterface, sourceInterface } from "@/types";
 import axios from "axios";
 import dayjs from "dayjs";
-import Cookies from "js-cookie";
 interface userDataSliceInterface {
   username: string | null;
   balances: {

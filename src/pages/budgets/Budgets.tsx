@@ -1,17 +1,6 @@
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { getAllBudgets, getAllBudgetsSelector, getCurrentBudget } from "@/redux/userDataSlice";
-import axios from "axios";
+import { useAppSelector } from "@/hooks";
+import { getAllBudgetsSelector, getCurrentBudget } from "@/redux/userDataSlice";
 import dayjs from "dayjs";
-import { useState } from "react";
 import Spendings from "./Spendings";
 import BudegtsDistribution from "./BudgetsDistribution";
 import NewBudget from "./NewBudget";

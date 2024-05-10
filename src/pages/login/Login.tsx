@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@/hooks";
 import { login } from "@/redux/userDataSlice";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -29,9 +29,7 @@ const Login = () => {
   return (
     <div className=" fixed right-0 left-0 top-0 bottom-0 flex justify-center items-center flex-col bg-DeepGray select-none">
       <div className="w-[70%]">
-        <h1 className=" font-semibold text-3xl mb-6 text-left text-White">
-          Login To Your Budget
-        </h1>
+        <h1 className=" font-semibold text-3xl mb-6 text-left text-White">Login To Your Budget</h1>
       </div>
       <input
         type="text"

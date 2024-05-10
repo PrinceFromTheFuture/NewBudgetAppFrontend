@@ -1,12 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppDispatch } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { getAllTransactions } from "@/redux/actionsSlice";
-import {
-  getAllBudgets,
-  getAllSources,
-  getUsernameSelector,
-  login,
-} from "@/redux/userDataSlice";
+import { getAllBudgets, getAllSources, login } from "@/redux/userDataSlice";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
@@ -30,10 +25,9 @@ function Root() {
         navigate("/login");
         return;
       }
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_API}/auth/verifyToken`,
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${import.meta.env.VITE_BASE_API}/auth/verifyToken`, {
+        withCredentials: true,
+      });
       if (!response.data.username) {
         console.log(response.data.username);
         navigate("/login");

@@ -1,13 +1,8 @@
 import StageWraper from "./StageWraper";
 import { actionInteface } from "@/types";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useAppSelector } from "@/hooks";
-import { getAllBudgetsSelector, getCurrentBudget } from "@/redux/userDataSlice";
+import { getCurrentBudget } from "@/redux/userDataSlice";
 
 interface stage1PropsInterface {
   stage: number;
@@ -18,11 +13,7 @@ interface stage1PropsInterface {
   nextStage: () => void;
 }
 
-const Satge1 = ({
-  stage,
-  nextStage,
-  updateFormFiled,
-}: stage1PropsInterface) => {
+const Satge1 = ({ stage, nextStage, updateFormFiled }: stage1PropsInterface) => {
   const budgets = useAppSelector(getCurrentBudget);
 
   return (
@@ -38,16 +29,10 @@ const Satge1 = ({
           }}
           className="p-4 sm:w-96 w-full bg-RichGray rounded-xl hover:border-2 border-DimGray flex justify-start items-center mb-4 "
         >
-          <img
-            src="income.svg"
-            alt=""
-            className="p-2.5 bg-[#65AD82]  rounded-xl w-11 "
-          />
+          <img src="income.svg" alt="" className="p-2.5 bg-[#65AD82]  rounded-xl w-11 " />
           <div className="text-start ml-3">
             <div className=" text-lg text-White  font-bold">income</div>
-            <div className=" text-md font-semibold text-FadedGray">
-              choose if this is a revenu
-            </div>
+            <div className=" text-md font-semibold text-FadedGray">choose if this is a revenu</div>
           </div>
         </div>
         <Drawer>
@@ -57,11 +42,7 @@ const Satge1 = ({
             }}
             className="p-4 sm:w-96 w-full bg-RichGray rounded-xl hover:border-2 border-DimGray flex justify-start items-center  "
           >
-            <img
-              src="outcome.svg"
-              alt=""
-              className="p-2.5 bg-[#D27979]  rounded-xl w-11 "
-            />
+            <img src="outcome.svg" alt="" className="p-2.5 bg-[#D27979]  rounded-xl w-11 " />
             <div className="text-start ml-3">
               <div className="   text-lg  text-White font-bold">outcome</div>
               <div className="text-md font-semibold text-FadedGray">
@@ -90,9 +71,7 @@ const Satge1 = ({
                         className=" w-3 h-3 rounded-full"
                         style={{ backgroundColor: budget.color }}
                       ></div>
-                      <div className=" text-lg text-White font-semibold ">
-                        {budget.name}
-                      </div>
+                      <div className=" text-lg text-White font-semibold ">{budget.name}</div>
                     </DrawerClose>
                   );
                 })}
