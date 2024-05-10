@@ -8,6 +8,8 @@ import { store } from "./redux/store.ts";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import { NewAction } from "./pages/newAction/NewAction.tsx";
 import Budgets from "./pages/budgets/Budgets.tsx";
+import { LogIn } from "lucide-react";
+import Login from "./pages/login/Login.tsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/newAction",
     element: <NewAction />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

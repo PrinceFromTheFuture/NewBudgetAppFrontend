@@ -1,6 +1,5 @@
 // MultiStageForm.js
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Satge1 from "./Satge1";
 import Satge2 from "./Stage2";
 import Satge3 from "./Stage3";
@@ -10,10 +9,12 @@ import { actionInteface } from "@/types";
 import axios from "axios";
 import { useAppDispatch } from "@/hooks";
 import { getAllTransactions } from "@/redux/actionsSlice";
+import { useNavigate } from "react-router-dom";
 
 export const NewAction = () => {
-  const [stage, setStage] = useState(1);
   const navigate = useNavigate();
+
+  const [stage, setStage] = useState(1);
   const dispatch = useAppDispatch();
 
   const totalStages = 5; // Adjust as per your form stages

@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllBudgetsSelector } from "@/redux/userDataSlice";
+import { getAllBudgetsSelector, getCurrentBudget } from "@/redux/userDataSlice";
 import { actionInteface } from "@/types";
 import { useState } from "react";
 import dayjs from "dayjs";
@@ -21,14 +21,16 @@ ChartJS.register(ArcElement, Tooltip);
 const Chart = () => {
   const [TimeFrame, setTimeFrame] = useState<string>("today");
   const allActions = useAppSelector(getAllTransactionsSelector);
-  const budgets = useAppSelector(getAllBudgetsSelector);
+  const budgets = useAppSelector(getCurrentBudget);
   const chartBudgets: { name: string; amountSpent: number; color: string }[] =
     [];
 
   const options = {};
 
   const findRealBudgetFromAction = (action: actionInteface) => {
-    const budgetFound = budgets.find((budget) => budget.name === action.budget);
+    const budgetFound = budgets.categories.find(
+      (budget) => budget.name === action.budget
+    );
     if (!budgetFound) {
       return budgets[0];
     }

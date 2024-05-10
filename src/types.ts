@@ -13,9 +13,16 @@ export interface sourceInterface {
   color: string;
 }
 
-export interface budgetInterface {
+export interface BudgetCategory {
   name: string;
   spent: number;
   scheduled: number;
   color: string;
+}
+
+export interface budgetInterface {
+  user: string;
+  start: string;
+  end: string;
+  categories: BudgetCategory[];
 }

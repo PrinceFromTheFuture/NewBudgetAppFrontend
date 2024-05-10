@@ -7,7 +7,8 @@ export const getAllTransactions = createAsyncThunk(
   "actions/getAll",
   async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BASE_API}/transactions`
+      `${import.meta.env.VITE_BASE_API}/transactions`,
+      { withCredentials: true }
     );
     return response.data;
   }
@@ -21,7 +22,6 @@ const actionsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAllTransactions.fulfilled, (state, action) => {
       if (!state) {
-        console.log("f");
       }
       return action.payload;
     });

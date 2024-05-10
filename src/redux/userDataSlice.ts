@@ -1,19 +1,17 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import { RootState, store } from "./store";
 import { budgetInterface, sourceInterface } from "@/types";
 import axios from "axios";
 import dayjs from "dayjs";
-
+import Cookies from "js-cookie";
 interface userDataSliceInterface {
+  username: string | null;
   balances: {
     netBalance: number;
     grossBalance: number;
   };
   todayProfit: string;
-  budgetTimeFrame: {
-    from: string;
-    to: string;
-  };
+
   sources: sourceInterface[];
   budgets: budgetInterface[];
 }
@@ -27,6 +25,7 @@ export const getAllSources = createAsyncThunk(
     return response.data;
   }
 );
+
 export const getAllBudgets = createAsyncThunk(
   "userData/getAllBudgets",
   async () => {
@@ -38,6 +37,7 @@ export const getAllBudgets = createAsyncThunk(
 );
 
 const initialState: userDataSliceInterface = {
+  username: null,
   balances: {
     netBalance: 235.23,
     grossBalance: 1234.13,
@@ -45,10 +45,6 @@ const initialState: userDataSliceInterface = {
   todayProfit: "123$ (4%)",
   sources: [],
   budgets: [],
-  budgetTimeFrame: {
-    from: dayjs().toString(),
-    to: dayjs().add(30, "days").toString(),
-  },
 };
 
 const userDataSlice = createSlice({
@@ -58,6 +54,9 @@ const userDataSlice = createSlice({
   reducers: {
     updateNetBalance(state, action: PayloadAction<number>) {
       state.balances.grossBalance = action.payload;
+    },
+    login(state, action: PayloadAction<string>) {
+      state.username = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -72,7 +71,7 @@ const userDataSlice = createSlice({
 
 export const userDataReducer = userDataSlice.reducer;
 
-export const { updateNetBalance } = userDataSlice.actions;
+export const { updateNetBalance, login } = userDataSlice.actions;
 
 export const getBalancesSelector = (state: RootState) =>
   state.userData.balances;
@@ -84,5 +83,17 @@ export const getAllSourcesSelector = (state: RootState) =>
 export const getAllBudgetsSelector = (state: RootState) =>
   state.userData.budgets;
 
-export const getBudgetTimeFrameSelector = (state: RootState) =>
-  state.userData.budgetTimeFrame;
+export const getCurrentBudget = (state: RootState) => {
+  const now = dayjs();
+  const budgetFound = state.userData.budgets.find((budget) => {
+    dayjs(budget.start).isBefore(now) && dayjs(budget.end).isAfter(now);
+  });
+  if (!budgetFound) {
+    return state.userData.budgets[0];
+  } else {
+    return budgetFound;
+  }
+};
+
+export const getUsernameSelector = (state: RootState) =>
+  state.userData.username;

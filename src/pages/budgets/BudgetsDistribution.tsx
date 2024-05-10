@@ -3,27 +3,27 @@ import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
 
-import { getAllBudgetsSelector } from "@/redux/userDataSlice";
+import { getAllBudgetsSelector, getCurrentBudget } from "@/redux/userDataSlice";
 
 ChartJS.register(ArcElement, Tooltip);
 
 const BudegtsDistribution = () => {
-  const allBudgets = useAppSelector(getAllBudgetsSelector);
+  const allBudgets = useAppSelector(getCurrentBudget);
 
   const data = {
-    labels: allBudgets.map((budget) => budget.name),
+    labels: allBudgets.categories.map((budget) => budget.name),
     datasets: [
       {
         label: "Budget",
-        data: allBudgets.map((budget) => budget.scheduled),
-        backgroundColor: allBudgets.map((budget) => budget.color),
+        data: allBudgets.categories.map((budget) => budget.scheduled),
+        backgroundColor: allBudgets.categories.map((budget) => budget.color),
         borderWidth: 0,
         hoverOffset: 0,
       },
     ],
   };
 
-  const totalBudget = allBudgets
+  const totalBudget = allBudgets.categories
     .map((budget) => budget.scheduled)
     .reduce((first, second) => first + second);
   const options = {};
@@ -51,7 +51,7 @@ const BudegtsDistribution = () => {
           </div>
         </div>
         <div className=" mt-12  flex flex-wrap w-full ">
-          {allBudgets.map((budget) => {
+          {allBudgets.categories.map((budget) => {
             return (
               <div className="text-White w-1/2 flex justify-between items-center mb-3">
                 <div className="flex justify-start items-center">

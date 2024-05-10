@@ -12,14 +12,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useAppSelector } from "@/hooks";
-import { getAllBudgetsSelector } from "@/redux/userDataSlice";
+import { getAllBudgetsSelector, getCurrentBudget } from "@/redux/userDataSlice";
 
 const Spendings = () => {
-  const allBudgets = useAppSelector(getAllBudgetsSelector);
+  const allBudgets = useAppSelector(getCurrentBudget);
   const ThisBillingCycleSpendings =
-    allBudgets.length === 0
+    allBudgets.categories.length === 0
       ? null
-      : allBudgets
+      : allBudgets.categories
           .map((budget) => budget.scheduled - budget.spent)
           .reduce((first, second) => first + second);
   return (
@@ -39,7 +39,7 @@ const Spendings = () => {
           left to Spend This Month
         </div>
         <div className="mt-7  flex justify-start items-start flex-col ">
-          {allBudgets.map((bugdet) => {
+          {allBudgets.categories.map((bugdet) => {
             return (
               <TooltipProvider delayDuration={0}>
                 <Tooltip>

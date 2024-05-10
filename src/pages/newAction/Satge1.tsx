@@ -7,7 +7,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useAppSelector } from "@/hooks";
-import { getAllBudgetsSelector } from "@/redux/userDataSlice";
+import { getAllBudgetsSelector, getCurrentBudget } from "@/redux/userDataSlice";
 
 interface stage1PropsInterface {
   stage: number;
@@ -23,7 +23,7 @@ const Satge1 = ({
   nextStage,
   updateFormFiled,
 }: stage1PropsInterface) => {
-  const budgets = useAppSelector(getAllBudgetsSelector);
+  const budgets = useAppSelector(getCurrentBudget);
 
   return (
     <StageWraper stage={1} currentStage={stage}>
@@ -75,9 +75,11 @@ const Satge1 = ({
                 Choose Your Outcome budget
               </div>
               <div className="mt-4  flex justify-between flex-wrap w-full gap-y-5 ">
-                {budgets.map((budget) => {
+                {budgets.categories.map((budget) => {
+                  console.log(budget);
                   return (
                     <DrawerClose
+                      key={budget.color}
                       onClick={() => {
                         updateFormFiled("budget", budget.name);
                         nextStage();

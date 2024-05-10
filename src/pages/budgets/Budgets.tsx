@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   getAllBudgets,
   getAllBudgetsSelector,
-  getBudgetTimeFrameSelector,
+  getCurrentBudget,
 } from "@/redux/userDataSlice";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -23,7 +23,7 @@ const Budgets = () => {
   // react keeps flagging me this is the problem on line 36
   const allBudgets = useAppSelector(getAllBudgetsSelector);
 
-  const budgetTimeFrame = useAppSelector(getBudgetTimeFrameSelector);
+  const budget = useAppSelector(getCurrentBudget);
   const dispatch = useAppDispatch();
 
   const [newBudgetTimeFrame, setNewBudgetTimeFrame] = useState<{
@@ -52,8 +52,8 @@ const Budgets = () => {
               {" "}
               <h1 className="  text-White text-4xl font-bold ">Budgets</h1>
               <h4 className="  text-FadedGray text-lg font-semibold mt-2  ">
-                Budget from {dayjs(budgetTimeFrame.from).format("DD/MM")} until{" "}
-                {dayjs(budgetTimeFrame.to).format("DD/MM")}
+                Budget from {dayjs(budget.start).format("DD/MM")} until{" "}
+                {dayjs(budget.end).format("DD/MM")}
               </h4>
             </div>
             <Dialog>

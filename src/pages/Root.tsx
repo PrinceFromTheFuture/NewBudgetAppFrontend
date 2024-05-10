@@ -1,16 +1,50 @@
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { getAllTransactions } from "@/redux/actionsSlice";
-import { getAllBudgets, getAllSources } from "@/redux/userDataSlice";
+import {
+  getAllBudgets,
+  getAllSources,
+  getUsernameSelector,
+  login,
+} from "@/redux/userDataSlice";
+import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect } from "react";
-import { Outlet, useLocation, Link } from "react-router-dom";
+import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
 
 function Root() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getAllSources());
     dispatch(getAllTransactions());
     dispatch(getAllBudgets());
+  }, []);
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      const token = Cookies.get("authToken");
+      if (!token) {
+        console.log("noToken");
+        navigate("/login");
+        return;
+      }
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_API}/auth/verifyToken`,
+        { withCredentials: true }
+      );
+      if (!response.data.username) {
+        console.log(response.data.username);
+        navigate("/login");
+
+        return;
+      }
+      console.log(response.data.username);
+
+      dispatch(login(response.data.username as string));
+    };
+    verifyToken();
   }, []);
   const location = useLocation();
   const routes: { path: string; iconPath: string; name: string }[] = [
@@ -23,6 +57,16 @@ function Root() {
   return (
     <div className=" w-full h-[100vh] flex justify-between items-center bg-DeepGray  select-none overflow-hidden ">
       <div className="w-[16%]  h-full  border-r-2 border-RichGray px-5 text-FadedGray flex justify-center items-center flex-col  py-14 gap-4">
+        <div
+          className="cursor-pointer flex-end w-full  bg-RichGray p-2 flex justify-center items-center rounded-md font-semibold"
+          onClick={() => {
+            Cookies.remove("authToken");
+            navigate("/login");
+          }}
+        >
+          Log Out
+        </div>
+
         {routes.map((route) => {
           return (
             <Link
