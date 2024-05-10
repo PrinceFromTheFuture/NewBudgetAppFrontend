@@ -24,5 +24,10 @@ export interface budgetInterface {
   user: string;
   start: string;
   end: string;
-  categories: BudgetCategory[];
+  categories: {
+    name: string;
+    spent: number;
+    scheduled: number;
+    color: string;
+  }[];
 }

@@ -16,22 +16,34 @@ interface userDataSliceInterface {
   budgets: budgetInterface[];
 }
 
-export const getAllSources = createAsyncThunk(
-  "userData/getAllSources",
-  async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_BASE_API}/sources`
-    );
-    return response.data;
-  }
-);
+export const getAllSources = createAsyncThunk("userData/getAllSources", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_BASE_API}/sources`);
+  return response.data;
+});
 
-export const getAllBudgets = createAsyncThunk(
-  "userData/getAllBudgets",
-  async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_BASE_API}/budgets`
-    );
+export const getAllBudgets = createAsyncThunk("userData/getAllBudgets", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_BASE_API}/budgets`, {
+    withCredentials: true,
+  });
+  return response.data;
+});
+
+export interface submittingBudgetInterface {
+  start: string;
+  end: string;
+  categories: {
+    name: string;
+    scheduled: number;
+    color: string;
+  }[];
+}
+
+export const submitNewBudget = createAsyncThunk(
+  "userData/budgets/new",
+  async (budgetData: submittingBudgetInterface) => {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_API}/budgets`, budgetData, {
+      withCredentials: true,
+    });
     return response.data;
   }
 );
@@ -66,6 +78,9 @@ const userDataSlice = createSlice({
     builder.addCase(getAllBudgets.fulfilled, (state, action) => {
       state.budgets = action.payload;
     });
+    builder.addCase(submitNewBudget.fulfilled, (state, action) => {
+      state.budgets.push(action.payload);
+    });
   },
 });
 
@@ -73,15 +88,11 @@ export const userDataReducer = userDataSlice.reducer;
 
 export const { updateNetBalance, login } = userDataSlice.actions;
 
-export const getBalancesSelector = (state: RootState) =>
-  state.userData.balances;
-export const getTodaysProfitSelector = (state: RootState) =>
-  state.userData.todayProfit;
-export const getAllSourcesSelector = (state: RootState) =>
-  state.userData.sources;
+export const getBalancesSelector = (state: RootState) => state.userData.balances;
+export const getTodaysProfitSelector = (state: RootState) => state.userData.todayProfit;
+export const getAllSourcesSelector = (state: RootState) => state.userData.sources;
 
-export const getAllBudgetsSelector = (state: RootState) =>
-  state.userData.budgets;
+export const getAllBudgetsSelector = (state: RootState) => state.userData.budgets;
 
 export const getCurrentBudget = (state: RootState) => {
   const now = dayjs();
@@ -95,5 +106,4 @@ export const getCurrentBudget = (state: RootState) => {
   }
 };
 
-export const getUsernameSelector = (state: RootState) =>
-  state.userData.username;
+export const getUsernameSelector = (state: RootState) => state.userData.username;
