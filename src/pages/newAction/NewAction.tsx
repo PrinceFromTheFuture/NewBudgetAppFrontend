@@ -63,7 +63,7 @@ export const NewAction = () => {
       withCredentials: true,
     });
     dispatch(getAllTransactions());
-    navigate(-1);
+    navigate("/budgets");
   };
   const budget = useAppSelector((state) => getCurrentBudget(state));
   if (!budget) {
