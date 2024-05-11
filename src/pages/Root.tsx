@@ -19,12 +19,6 @@ function Root() {
 
   useEffect(() => {
     const verifyToken = async () => {
-      const token = Cookies.get("authToken");
-      if (!token) {
-        console.log("noToken");
-        navigate("/login");
-        return;
-      }
       const response = await axios.get(`${import.meta.env.VITE_BASE_API}/auth/verifyToken`, {
         withCredentials: true,
       });
