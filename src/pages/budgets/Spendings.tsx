@@ -24,7 +24,7 @@ const Spendings = () => {
         <div className="text-FadedGray text-md font-semibold mt-1 "> left to Spend This Month</div>
         <div className="mt-7  flex justify-start items-start flex-col ">
           {allBudgets.categories.map((bugdet) => {
-            console.log(bugdet.spent);
+            console.log(bugdet);
             return (
               <TooltipProvider delayDuration={0}>
                 <Tooltip>

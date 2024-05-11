@@ -38,6 +38,7 @@ const NewBudget = () => {
   interface budgetCategory {
     id: number;
     name: string;
+    spent: number;
     scheduled: number;
     color: string;
   }
@@ -59,6 +60,7 @@ const NewBudget = () => {
     }
     setCategories(
       categories.concat({
+        spent: 0,
         color: "",
         id: categories.length,
         name: "new category",
