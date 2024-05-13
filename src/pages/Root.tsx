@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { getAllTransactions } from "@/redux/actionsSlice";
 import { getAllBudgets, getAllSources, login } from "@/redux/userDataSlice";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
 
