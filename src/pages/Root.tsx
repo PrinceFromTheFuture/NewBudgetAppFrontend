@@ -45,9 +45,13 @@ function Root() {
       <div className="w-[16%]  h-full  border-r-2 border-RichGray px-5 text-FadedGray flex justify-center items-center flex-col  py-14 gap-4">
         <div
           className="cursor-pointer flex-end w-full  bg-RichGray p-2 flex justify-center items-center rounded-md font-semibold"
-          onClick={() => {
-            Cookies.remove("authToken");
-            navigate("/login");
+          onClick={async () => {
+            const respose = await axios.get(`${import.meta.env.VITE_BASE_API}/auth/logout`, {
+              withCredentials: true,
+            });
+            if ((respose.status = 200)) {
+              navigate("/login");
+            }
           }}
         >
           Log Out
