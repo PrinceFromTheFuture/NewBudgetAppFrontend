@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import Spendings from "./Spendings";
 import BudegtsDistribution from "./BudgetsDistribution";
 import NewBudget from "./NewBudget";
+import LeftToSpendProgress from "./LeftToSpendProgress";
 
 const Budgets = () => {
   // react keeps flagging me this is the problem on line 36
@@ -33,6 +34,7 @@ const Budgets = () => {
         <div className=" mt-10 overflow-auto flex justify-start gap-8 ">
           <Spendings />
           <BudegtsDistribution />
+          <LeftToSpendProgress />
         </div>
       ) : (
         <div className="text-White">you dont have any budgets yet...</div>

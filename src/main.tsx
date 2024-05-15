@@ -9,6 +9,7 @@ import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import { NewAction } from "./pages/newAction/NewAction.tsx";
 import Budgets from "./pages/budgets/Budgets.tsx";
 import Login from "./pages/login/Login.tsx";
+import Transactions from "./pages/transactions/Transactions.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/budgets", element: <Budgets /> },
+      { path: "/transactions", element: <Transactions /> },
     ],
   },
   {

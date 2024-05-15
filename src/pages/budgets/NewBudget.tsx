@@ -41,6 +41,7 @@ const NewBudget = () => {
     spent: number;
     scheduled: number;
     color: string;
+    
   }
   const [categories, setCategories] = useState<budgetCategory[]>([]);
 

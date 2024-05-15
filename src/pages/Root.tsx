@@ -34,6 +34,8 @@ function Root() {
   const location = useLocation();
   const routes: { path: string; iconPath: string; name: string }[] = [
     { path: "/", iconPath: "3", name: "Home" },
+    { path: "/transactions", iconPath: "3", name: "Transactions" },
+
     { path: "/dashboard", iconPath: "3", name: "Dashboard" },
     { path: "/newAction", iconPath: "3", name: "New Action" },
     { path: "/budgets", iconPath: "3", name: "Budgets" },
