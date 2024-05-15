@@ -9,7 +9,7 @@ const Transaction = ({ transaction }: { transaction: actionInteface }) => {
   const cuurentBudget = useAppSelector(getCurrentBudget);
 
   return (
-    <div className=" w-full h-14 hover:bg-RichGray cursor-pointer rounded-lg transition-all  mb-2">
+    <div className=" w-full h-14 hover:bg-RichGray cursor-pointer rounded-lg transition-all  mb-2 ">
       <div className="flex justify-between items-center  h-full">
         <div className="w-[5%] flex justify-center items-center ">
           {" "}

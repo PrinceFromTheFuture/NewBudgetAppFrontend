@@ -10,10 +10,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useSortingTransactions from "./useSortingTransactions";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 const Transactions = () => {
   const allTransactions = useAppSelector(getAllTransactionsSelector);
 
-  const [maxActionsInPage, setMaxActionsInPage] = useState(10);
+  const [maxActionsInPage, setMaxActionsInPage] = useState(11);
   const [maxPages, setMaxPages] = useState(
     allTransactions.length % maxActionsInPage > 0
       ? Number((allTransactions.length / maxActionsInPage).toString()[0]) + 1
@@ -41,32 +49,10 @@ const Transactions = () => {
 
   const { sortedTransactions, handleChangeSortedTransctions } = useSortingTransactions();
 
-  const TempTrigers = () => {
-    return (
-      <div className="bg-RichGray flex justify-between items-center w-[10%] text-White">
-        <div
-          onClick={() => {
-            if (currentPage - 1 > 0) {
-              setCurrentPage((prev) => prev - 1);
-            }
-          }}
-          className="p-3 cursor-pointer"
-        >
-          prev
-        </div>
-        <div>{currentPage}</div>
-
-        <div className="p-3 cursor-pointer" onClick={() => handleNextActionsPage()}>
-          next
-        </div>
-      </div>
-    );
-  };
   return (
-    <div>
-      <TempTrigers />
+    <div className="overflow-hidden">
       <h1 className="  text-White text-4xl font-bold ">Budgets</h1>
-      <div className="mb-2 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%] ">
+      <div className="mb-2 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%] overflow-hidden ">
         <div></div>
         <div className="flex justify-center items-end ">
           <div className="w-32 text-wrap"> Rows Per Page: </div>
@@ -135,14 +121,72 @@ const Transactions = () => {
           <img src="/sort.svg" className="w-5" />
         </div>
       </div>
-      {sortedTransactions
-        .slice(
-          (currentPage - 1) * maxActionsInPage,
-          (currentPage - 1) * maxActionsInPage + maxActionsInPage
-        )
-        .map((transaction) => {
-          return <Transaction transaction={transaction} key={transaction.date} />;
-        })}
+      <div className=" overflow-auto">
+        {sortedTransactions
+          .slice(
+            (currentPage - 1) * maxActionsInPage,
+            (currentPage - 1) * maxActionsInPage + maxActionsInPage
+          )
+          .map((transaction) => {
+            return <Transaction transaction={transaction} key={transaction.date} />;
+          })}
+      </div>
+      <div className="my-2 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%] ">
+        <div>
+          Shwoing {(currentPage - 1) * maxActionsInPage + 1} -{" "}
+          {(currentPage - 1) * maxActionsInPage + maxActionsInPage} out of{" "}
+          {sortedTransactions.length} results
+        </div>
+        <div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  className="text-lg"
+                  onClick={() => {
+                    if (currentPage - 1 > 0) {
+                      setCurrentPage((prev) => prev - 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+              {Array.from({ length: maxPages }, (_, index) => {
+                if (index < 5) {
+                  return (
+                    <PaginationItem onClick={() => setCurrentPage(index + 1)} key={index}>
+                      <PaginationLink isActive={index + 1 === currentPage}>
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+              })}
+              <PaginationItem>
+                <Select
+                  defaultValue={maxActionsInPage.toString()}
+                  onValueChange={(value) => setCurrentPage(Number(value))}
+                >
+                  <SelectTrigger className=" bg-RichGray" hidden></SelectTrigger>
+                  <SelectContent className="bg-RichGray shadow-2xl">
+                    {Array.from({ length: maxPages }, (_, index) => (
+                      <SelectItem
+                        className=" focus:bg-DeepGray "
+                        value={(index + 1).toString()}
+                        key={index}
+                      >
+                        {index + 1}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext className="text-lg  " onClick={() => handleNextActionsPage()} />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      </div>
     </div>
   );
 };
