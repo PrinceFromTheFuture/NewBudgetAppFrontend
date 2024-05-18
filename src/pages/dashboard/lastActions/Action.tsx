@@ -10,9 +10,7 @@ const Action = ({ action }: actionPropsInterface) => {
     <tr className=" rounded-full hover:bg-DimGray transition-all cursor-pointer ">
       <th className="font-semibold">
         {" "}
-        {action.title.length > 20
-          ? action.title.substring(0, 20) + "..."
-          : action.title}
+        {action.title.length > 20 ? action.title.substring(0, 20) + "..." : action.title}
       </th>
       <th className="font-semibold">
         <div
@@ -25,12 +23,10 @@ const Action = ({ action }: actionPropsInterface) => {
         </div>
       </th>
 
-      <th className="font-semibold">
-        {dayjs(action.date).format("DD/MM/YYYY")}
-      </th>
+      <th className="font-semibold">{dayjs(action.date).format("DD/MM/YYYY")}</th>
       <th className="font-bold text-Purple ">{action.amount}₪</th>
 
-      <th className="font-semibold"> {action.budget}</th>
+      <th className="font-semibold"> {action.budgetCategory}</th>
       <th className="font-semibold">{action.source}</th>
     </tr>
   );

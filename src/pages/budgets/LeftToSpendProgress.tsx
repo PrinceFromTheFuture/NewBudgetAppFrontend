@@ -48,7 +48,11 @@ const LeftToSpendProgress = () => {
                 strokeWidth={30}
                 stroke="#A5AEFF"
                 strokeDashoffset={
-                  Math.PI * 75 * 2 - Math.PI * 75 * 2 * (totalSpent / totalScheduled)
+                  Math.PI * 75 * 2 -
+                  Math.PI *
+                    75 *
+                    2 *
+                    (totalSpent / totalScheduled >= 1 ? 1 : totalSpent / totalScheduled)
                 }
                 strokeDasharray={Math.PI * 75 * 2}
               ></circle>

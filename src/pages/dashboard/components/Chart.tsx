@@ -27,7 +27,7 @@ const Chart = () => {
   const options = {};
 
   const findRealBudgetFromAction = (action: actionInteface) => {
-    const budgetFound = budgets.categories.find((budget) => budget.name === action.budget);
+    const budgetFound = budgets.categories.find((budget) => budget.name === action.budgetCategory);
     if (!budgetFound) {
       return budgets[0];
     }
@@ -56,7 +56,7 @@ const Chart = () => {
       });
     } else {
       const actionBudget = chartBudgets.find(
-        (budget) => budget.name === timeFramesOnlyOutcomesActions[i].budget
+        (budget) => budget.name === timeFramesOnlyOutcomesActions[i].budgetCategory
       );
       if (!actionBudget) {
         chartBudgets.push({
@@ -66,7 +66,7 @@ const Chart = () => {
         });
       } else {
         chartBudgets.find(
-          (budget) => budget.name === timeFramesOnlyOutcomesActions[i].budget
+          (budget) => budget.name === timeFramesOnlyOutcomesActions[i].budgetCategory
         )!.amountSpent += timeFramesOnlyOutcomesActions[i].amount;
       }
     }

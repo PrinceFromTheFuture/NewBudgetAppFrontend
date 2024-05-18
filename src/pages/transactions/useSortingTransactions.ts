@@ -21,7 +21,10 @@ const useSortingTransactions = () => {
 
   const allSortingFilters = {
     budget: (actionA: actionInteface, actionB: actionInteface) => {
-      return budgetCategoriesOrder[actionA.budget] - budgetCategoriesOrder[actionB.budget];
+      return (
+        budgetCategoriesOrder[actionA.budgetCategory] -
+        budgetCategoriesOrder[actionB.budgetCategory]
+      );
     },
     name: (actionA: actionInteface, actionB: actionInteface) =>
       actionA.title.localeCompare(actionB.title),
@@ -43,11 +46,19 @@ const useSortingTransactions = () => {
     if (didChange) {
       setSortedTransactions(newSortedTransactions);
     } else {
-      setSortedTransactions(newSortedTransactions.slice().reverse());
+      const newTransactions = newSortedTransactions.slice().reverse();
+      setSortedTransactions(newTransactions);
     }
   };
 
-  return { sortedTransactions, handleChangeSortedTransctions };
+  const handleChangeSearchValue = (value: string) => {
+    const newSortedTransactions = allTransactions.filter((transaction) => {
+      return transaction.title.includes(value);
+    });
+    setSortedTransactions(newSortedTransactions);
+  };
+
+  return { sortedTransactions, handleChangeSortedTransctions, handleChangeSearchValue };
 };
 
 export default useSortingTransactions;

@@ -26,6 +26,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "@/lib"],
+  "include": ["src", "@/lib", "singleTransaction/singleTransaction.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

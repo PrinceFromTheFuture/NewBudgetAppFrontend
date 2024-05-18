@@ -62,7 +62,7 @@ const Satge1 = ({ stage, nextStage, updateFormFiled }: stage1PropsInterface) => 
                     <DrawerClose
                       key={budget.color}
                       onClick={() => {
-                        updateFormFiled("budget", budget.name);
+                        updateFormFiled("budgetCategory", budget.name);
                         nextStage();
                       }}
                       className="p-2.5 w-[48%] bg-RichGray hover:bg-DeepGray rounded-lg flex justify-center items-center gap-2 hover:border  transition-all "

@@ -65,7 +65,7 @@ export const NewAction = () => {
     dispatch(getAllTransactions());
     navigate("/budgets");
   };
-  const budget = useAppSelector((state) => getCurrentBudget(state));
+  const budget = useAppSelector(getCurrentBudget);
   if (!budget) {
     return <div>you have not create any budget yet!</div>;
   }

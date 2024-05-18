@@ -21,7 +21,7 @@ import {
 const Transactions = () => {
   const allTransactions = useAppSelector(getAllTransactionsSelector);
 
-  const [maxActionsInPage, setMaxActionsInPage] = useState(11);
+  const [maxActionsInPage, setMaxActionsInPage] = useState(10);
   const [maxPages, setMaxPages] = useState(
     allTransactions.length % maxActionsInPage > 0
       ? Number((allTransactions.length / maxActionsInPage).toString()[0]) + 1
@@ -47,13 +47,31 @@ const Transactions = () => {
     setMaxActionsInPage(ActionsInPages);
   };
 
-  const { sortedTransactions, handleChangeSortedTransctions } = useSortingTransactions();
+  const [serachValue, setSearchValue] = useState("");
 
+  const { sortedTransactions, handleChangeSortedTransctions, handleChangeSearchValue } =
+    useSortingTransactions();
+
+  if (allTransactions.length === 0) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="overflow-hidden">
-      <h1 className="  text-White text-4xl font-bold ">Budgets</h1>
-      <div className="mb-2 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%] overflow-hidden ">
-        <div></div>
+      <h1 className="  text-White text-4xl font-bold mb-8 ">Budgets</h1>
+      <div className="mb-3 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%]  ">
+        <div className="text-lg font-medium bg-RichGray rounded-md flex justify-between items-center w-[300px] h-12 p-0 ">
+          <img src="/magnifying-glass-solid.svg" alt="" className="w-4 m-4 mx-5 p-0" />
+
+          <input
+            value={serachValue}
+            onChange={(event) => {
+              setSearchValue(event.target.value);
+              handleChangeSearchValue(event.target.value);
+            }}
+            className=" h-full w-full m-0 p-0 outline-none border-none rounded-md bg-RichGray mr-4 text-base"
+            placeholder="serach transaction..."
+          />
+        </div>
         <div className="flex justify-center items-end ">
           <div className="w-32 text-wrap"> Rows Per Page: </div>
           <div>
@@ -128,7 +146,7 @@ const Transactions = () => {
             (currentPage - 1) * maxActionsInPage + maxActionsInPage
           )
           .map((transaction) => {
-            return <Transaction transaction={transaction} key={transaction.date} />;
+            return <Transaction transaction={transaction} key={transaction._id} />;
           })}
       </div>
       <div className="my-2 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%] ">

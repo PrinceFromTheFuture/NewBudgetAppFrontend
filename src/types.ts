@@ -3,14 +3,18 @@ export interface actionInteface {
   type: "income" | "outcome" | "transaction";
   date: string;
   amount: number;
-  budget: string;
+  budgetCategory: string;
   source: string;
+  _id: string;
 }
 
 export interface sourceInterface {
   name: string;
   balance: number;
   color: string;
+  username: string;
+  icon: string;
+  _id: string;
 }
 
 export interface BudgetCategory {

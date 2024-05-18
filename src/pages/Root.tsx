@@ -7,30 +7,8 @@ import { useEffect } from "react";
 import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
 
 function Root() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getAllSources());
-    dispatch(getAllTransactions());
-    dispatch(getAllBudgets());
-  }, []);
-
-  useEffect(() => {
-    const verifyToken = async () => {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_API}/auth/verifyToken`, {
-        withCredentials: true,
-      });
-      if (!response.data.username) {
-        navigate("/login");
-
-        return;
-      }
-
-      dispatch(login(response.data.username as string));
-    };
-    verifyToken();
-  }, []);
   const location = useLocation();
   const routes: { path: string; iconPath: string; name: string }[] = [
     { path: "/", iconPath: "3", name: "Home" },
@@ -39,6 +17,7 @@ function Root() {
     { path: "/dashboard", iconPath: "3", name: "Dashboard" },
     { path: "/newAction", iconPath: "3", name: "New Action" },
     { path: "/budgets", iconPath: "3", name: "Budgets" },
+    { path: "/sourcesAndCards", iconPath: "3", name: "sources And Cards" },
   ];
 
   return (
@@ -61,6 +40,7 @@ function Root() {
         {routes.map((route) => {
           return (
             <Link
+              key={route.path}
               to={route.path}
               className={cn(
                 " w-full rounded h-12 flex justify-start p-3 items-center text-lg font-semibold text-FadedGray hover:bg-RichGray transition-all",

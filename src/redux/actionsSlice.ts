@@ -3,16 +3,12 @@ import { RootState } from "./store";
 import { actionInteface } from "@/types";
 import axios from "axios";
 
-export const getAllTransactions = createAsyncThunk(
-  "actions/getAll",
-  async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_BASE_API}/transactions`,
-      { withCredentials: true }
-    );
-    return response.data;
-  }
-);
+export const getAllTransactions = createAsyncThunk("actions/getAll", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_BASE_API}/transactions`, {
+    withCredentials: true,
+  });
+  return response.data;
+});
 const initialState: actionInteface[] = [];
 
 const actionsSlice = createSlice({
