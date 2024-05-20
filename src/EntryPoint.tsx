@@ -2,8 +2,13 @@ import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "./hooks";
 import { getAllBudgets, getAllSources, login } from "./redux/userDataSlice";
-import { getAllTransactions } from "./redux/actionsSlice";
+import { getAllTransactions } from "./redux/transactionsSlice";
 import axios from "axios";
+
+import utc from "dayjs/plugin/utc";
+import dayjs from "dayjs";
+
+dayjs.extend(utc);
 
 const EntryPoint = () => {
   const dispatch = useAppDispatch();
@@ -17,9 +22,12 @@ const EntryPoint = () => {
 
   useEffect(() => {
     const verifyToken = async () => {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_API}/auth/verifyToken`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_API}/auth/verifyToken`,
+        {
+          withCredentials: true,
+        }
+      );
       if (!response.data.username) {
         navigate("/login");
 

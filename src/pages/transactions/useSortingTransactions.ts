@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/hooks";
-import { getAllTransactionsSelector } from "@/redux/actionsSlice";
+import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import { getCurrentBudget } from "@/redux/userDataSlice";
 import { actionInteface } from "@/types";
 import dayjs from "dayjs";
@@ -30,16 +30,22 @@ const useSortingTransactions = () => {
       actionA.title.localeCompare(actionB.title),
     date: (actionA: actionInteface, actionB: actionInteface) =>
       dayjs(actionA.date).unix() - dayjs(actionB.date).unix(),
-    amount: (actionA: actionInteface, actionB: actionInteface) => actionA.amount - actionB.amount,
+    amount: (actionA: actionInteface, actionB: actionInteface) =>
+      actionA.amount - actionB.amount,
     type: (actionA: actionInteface, actionB: actionInteface) => {
-      return transactionsTypeOrder[actionA.type] - transactionsTypeOrder[actionB.type];
+      return (
+        transactionsTypeOrder[actionA.type] -
+        transactionsTypeOrder[actionB.type]
+      );
     },
   };
 
   const handleChangeSortedTransctions = (
     filter: "name" | "date" | "budget" | "amount" | "source" | "type"
   ) => {
-    const newSortedTransactions = sortedTransactions.slice().sort(allSortingFilters[filter]);
+    const newSortedTransactions = sortedTransactions
+      .slice()
+      .sort(allSortingFilters[filter]);
     const didChange = !newSortedTransactions.every(
       (transaction, index) => transaction === sortedTransactions[index]
     );
@@ -58,7 +64,11 @@ const useSortingTransactions = () => {
     setSortedTransactions(newSortedTransactions);
   };
 
-  return { sortedTransactions, handleChangeSortedTransctions, handleChangeSearchValue };
+  return {
+    sortedTransactions,
+    handleChangeSortedTransctions,
+    handleChangeSearchValue,
+  };
 };
 
 export default useSortingTransactions;

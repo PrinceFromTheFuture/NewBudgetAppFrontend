@@ -57,7 +57,6 @@ const Satge1 = ({ stage, nextStage, updateFormFiled }: stage1PropsInterface) => 
               </div>
               <div className="mt-4  flex justify-between flex-wrap w-full gap-y-5 ">
                 {budgets.categories.map((budget) => {
-                  console.log(budget);
                   return (
                     <DrawerClose
                       key={budget.color}

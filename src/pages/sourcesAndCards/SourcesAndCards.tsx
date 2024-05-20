@@ -10,7 +10,7 @@ import {
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
 import { getAllSourcesSelector } from "@/redux/userDataSlice";
-import { getAllTransactionsSelector } from "@/redux/actionsSlice";
+import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import dayjs from "dayjs";
 
 const SourcesAndCards = () => {
@@ -28,7 +28,9 @@ const SourcesAndCards = () => {
     <>
       <h1 className="  text-White text-4xl font-bold ">Sources and cards</h1>
       <section className=" mt-5">
-        <h2 className="text-White text-2xl font-semibold ml-3 mb-2 ">Sources</h2>
+        <h2 className="text-White text-2xl font-semibold ml-3 mb-2 ">
+          Sources
+        </h2>
         <Carousel
           opts={{
             loop: true,
@@ -69,7 +71,8 @@ const SourcesAndCards = () => {
                       </div>
                     </CardHeader>
                     <CardContent className="text-White text-lg font-medium">
-                      {todaysSourceBalance}₪ {todaysSourceBalance > 0 ? "spent" : "profit"} today
+                      {todaysSourceBalance}₪{" "}
+                      {todaysSourceBalance > 0 ? "spent" : "profit"} today
                     </CardContent>
                   </Card>
                 </CarouselItem>

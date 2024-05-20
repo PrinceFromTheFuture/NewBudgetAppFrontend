@@ -10,9 +10,15 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent, CardDescription, CardTitle, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+  CardHeader,
+} from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
-import { getAllTransactionsSelector } from "@/redux/actionsSlice";
+import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import { getCurrentBudget } from "@/redux/userDataSlice";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -33,7 +39,9 @@ const SingleTransaction = () => {
       </div>
     );
   }
-  const singleTransaction = allTransactions.find((transction) => transction._id === transactionId)!;
+  const singleTransaction = allTransactions.find(
+    (transction) => transction._id === transactionId
+  )!;
 
   return (
     <div className="transition-all fixed right-0 top-0 bottom-0 left-0 bg-DeepGray overflow-hidden text-White  flex flex-col justify-between items-center p-20 select-none ">
@@ -69,10 +77,16 @@ const SingleTransaction = () => {
               }}
             >
               {" "}
-              {singleTransaction.type === "outcome" ? <ArrowDown /> : <ArrowUp />}
+              {singleTransaction.type === "outcome" ? (
+                <ArrowDown />
+              ) : (
+                <ArrowUp />
+              )}
             </div>
           </div>
-          <div className=" text-2xl  text-FadedGray font-bold mb-4">{singleTransaction.title}</div>
+          <div className=" text-2xl  text-FadedGray font-bold mb-4">
+            {singleTransaction.title}
+          </div>
         </div>
         <div className="flex justify-start gap-5 h-[9.5rem]">
           <Card className="w-min ">
@@ -80,8 +94,12 @@ const SingleTransaction = () => {
               {" "}
               <div className="  ">
                 {" "}
-                <div className="tracking-tight text-White text-2xl font-bold">Date</div>
-                <div className="font-semibold text-DimGray">What Date your transaction occur</div>
+                <div className="tracking-tight text-White text-2xl font-bold">
+                  Date
+                </div>
+                <div className="font-semibold text-DimGray">
+                  What Date your transaction occur
+                </div>
               </div>
             </CardHeader>
             <CardContent>
@@ -99,8 +117,12 @@ const SingleTransaction = () => {
               <CardHeader>
                 {" "}
                 <div>
-                  <div className="tracking-tight text-White text-2xl font-bold">Time</div>
-                  <div className="font-semibold text-DimGray">When did your transaction occur</div>
+                  <div className="tracking-tight text-White text-2xl font-bold">
+                    Time
+                  </div>
+                  <div className="font-semibold text-DimGray">
+                    When did your transaction occur
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -113,7 +135,8 @@ const SingleTransaction = () => {
               className="mt-5 h-full rounded-3xl flex justify-center items-center text-White font-bold text-3xl "
               style={{
                 backgroundColor: currentBudget.categories.find(
-                  (category) => category.name === singleTransaction.budgetCategory
+                  (category) =>
+                    category.name === singleTransaction.budgetCategory
                 )?.color,
               }}
             >

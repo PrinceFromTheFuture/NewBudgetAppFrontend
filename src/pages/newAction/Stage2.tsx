@@ -35,17 +35,17 @@ const Satge2 = ({
           When did your Action occured?
         </div>
         <input
-          style={{ position: "absolute", left: "-9999px" }}
           type="datetime-local"
           name="date"
           id="date"
+          className="  text-DeepGray"
           ref={inputRef}
           onChange={(e) => updateFormFiled("date", e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Set") {
               nextStage();
             }
-          }}
+          }}yyyy-MM-ddThh:mm
           value={formData.date}
         />
         <div className=" w-full flex justify-between items-center gap-3 h-20">

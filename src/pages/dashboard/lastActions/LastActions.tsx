@@ -1,6 +1,12 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
-import { getAllTransactionsSelector } from "@/redux/actionsSlice";
+import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import Action from "./Action";
 import dayjs from "dayjs";
 

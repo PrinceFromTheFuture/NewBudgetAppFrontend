@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@/hooks";
 import { cn } from "@/lib/utils";
-import { getAllTransactions } from "@/redux/actionsSlice";
+import { getAllTransactions } from "@/redux/transactionsSlice";
 import { getAllBudgets, getAllSources, login } from "@/redux/userDataSlice";
 import axios from "axios";
 import { useEffect } from "react";
@@ -26,9 +26,12 @@ function Root() {
         <div
           className="cursor-pointer flex-end w-full  bg-RichGray p-2 flex justify-center items-center rounded-md font-semibold"
           onClick={async () => {
-            const respose = await axios.get(`${import.meta.env.VITE_BASE_API}/auth/logout`, {
-              withCredentials: true,
-            });
+            const respose = await axios.get(
+              `${import.meta.env.VITE_BASE_API}/auth/logout`,
+              {
+                withCredentials: true,
+              }
+            );
             if ((respose.status = 200)) {
               navigate("/login");
             }

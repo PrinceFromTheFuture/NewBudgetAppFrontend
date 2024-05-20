@@ -2,7 +2,7 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
-import { getAllTransactionsSelector } from "@/redux/actionsSlice";
+import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import {
   Select,
   SelectContent,
@@ -22,29 +22,36 @@ const Chart = () => {
   const [TimeFrame, setTimeFrame] = useState<string>("today");
   const allActions = useAppSelector(getAllTransactionsSelector);
   const budgets = useAppSelector(getCurrentBudget);
-  const chartBudgets: { name: string; amountSpent: number; color: string }[] = [];
+  const chartBudgets: { name: string; amountSpent: number; color: string }[] =
+    [];
 
   const options = {};
 
   const findRealBudgetFromAction = (action: actionInteface) => {
-    const budgetFound = budgets.categories.find((budget) => budget.name === action.budgetCategory);
+    const budgetFound = budgets.categories.find(
+      (budget) => budget.name === action.budgetCategory
+    );
     if (!budgetFound) {
       return budgets[0];
     }
     return budgetFound;
   };
 
-  const OnlyOutcomesActions = allActions.filter((action) => action.type === "outcome");
+  const OnlyOutcomesActions = allActions.filter(
+    (action) => action.type === "outcome"
+  );
 
   let timeFramesOnlyOutcomesActions = OnlyOutcomesActions;
   if (TimeFrame === "today") {
-    timeFramesOnlyOutcomesActions = timeFramesOnlyOutcomesActions.filter((action) => {
-      if (dayjs(action.date).isSame(dayjs().toString(), "day") === true) {
-        return action;
-      } else {
-        return;
+    timeFramesOnlyOutcomesActions = timeFramesOnlyOutcomesActions.filter(
+      (action) => {
+        if (dayjs(action.date).isSame(dayjs().toString(), "day") === true) {
+          return action;
+        } else {
+          return;
+        }
       }
-    });
+    );
   }
 
   for (let i = 0; i < timeFramesOnlyOutcomesActions.length; i++) {
@@ -56,17 +63,20 @@ const Chart = () => {
       });
     } else {
       const actionBudget = chartBudgets.find(
-        (budget) => budget.name === timeFramesOnlyOutcomesActions[i].budgetCategory
+        (budget) =>
+          budget.name === timeFramesOnlyOutcomesActions[i].budgetCategory
       );
       if (!actionBudget) {
         chartBudgets.push({
           name: findRealBudgetFromAction(timeFramesOnlyOutcomesActions[i]).name,
           amountSpent: timeFramesOnlyOutcomesActions[i].amount,
-          color: findRealBudgetFromAction(timeFramesOnlyOutcomesActions[i]).color,
+          color: findRealBudgetFromAction(timeFramesOnlyOutcomesActions[i])
+            .color,
         });
       } else {
         chartBudgets.find(
-          (budget) => budget.name === timeFramesOnlyOutcomesActions[i].budgetCategory
+          (budget) =>
+            budget.name === timeFramesOnlyOutcomesActions[i].budgetCategory
         )!.amountSpent += timeFramesOnlyOutcomesActions[i].amount;
       }
     }
@@ -95,16 +105,25 @@ const Chart = () => {
         <div className="flex justify-between  ">
           <div>
             {" "}
-            <div className="tracking-tight text-White text-2xl font-bold">Activity</div>
-            <div className="font-semibold text-DimGray">Money Spent by By Budget</div>
+            <div className="tracking-tight text-White text-2xl font-bold">
+              Activity
+            </div>
+            <div className="font-semibold text-DimGray">
+              Money Spent by By Budget
+            </div>
           </div>
-          <Select defaultValue="today" onValueChange={(value) => setTimeFrame(value)}>
+          <Select
+            defaultValue="today"
+            onValueChange={(value) => setTimeFrame(value)}
+          >
             <SelectTrigger className="w-[170px]">
               <SelectValue placeholder="Select View" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="lastBillingCycle">Last Billing Cycle</SelectItem>
+                <SelectItem value="lastBillingCycle">
+                  Last Billing Cycle
+                </SelectItem>
                 <SelectItem value="today">Today</SelectItem>
               </SelectGroup>
             </SelectContent>
@@ -128,7 +147,9 @@ const Chart = () => {
                     style={{ backgroundColor: budget.color }}
                   ></div>
                   <div className="ml-3 font-semibold">
-                    {budget.name.length > 10 ? budget.name.substring(0, 10) + "..." : budget.name}
+                    {budget.name.length > 10
+                      ? budget.name.substring(0, 10) + "..."
+                      : budget.name}
                   </div>
                 </div>
                 <div className=" mr-6 text-DimGray font-semibold">

@@ -1,5 +1,5 @@
 // MultiStageForm.js
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Satge1 from "./Satge1";
 import Satge2 from "./Stage2";
 import Satge3 from "./Stage3";
@@ -8,9 +8,10 @@ import Satge4 from "./Stage4";
 import { actionInteface } from "@/types";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { getAllTransactions } from "@/redux/actionsSlice";
+import { getAllTransactions } from "@/redux/transactionsSlice";
 import { useNavigate } from "react-router-dom";
 import { getCurrentBudget } from "@/redux/userDataSlice";
+import dayjs from "dayjs";
 
 export const NewAction = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export const NewAction = () => {
     source: "",
     budget: "",
     amount: undefined,
-    date: new Date().toLocaleString(),
+    date: dayjs().format("YYYY-MM-DDTHH:mm"),
     type: "income",
   });
 
@@ -59,9 +60,13 @@ export const NewAction = () => {
   };
 
   const handlePostNewTransaction = async () => {
-    await axios.post(`${import.meta.env.VITE_BASE_API}/transactions`, formData, {
-      withCredentials: true,
-    });
+    await axios.post(
+      `${import.meta.env.VITE_BASE_API}/transactions`,
+      { ...formData, date: dayjs(formData.date).utc().format() },
+      {
+        withCredentials: true,
+      }
+    );
     dispatch(getAllTransactions());
     navigate("/budgets");
   };
@@ -74,7 +79,10 @@ export const NewAction = () => {
       <div>
         {" "}
         <div className="w-full flex justify-start items-center">
-          <div onClick={() => navigate(-1)} className="p-3 bg-RichGray rounded cursor-pointer">
+          <div
+            onClick={() => navigate(-1)}
+            className="p-3 bg-RichGray rounded cursor-pointer"
+          >
             Back
           </div>
         </div>
@@ -94,7 +102,11 @@ export const NewAction = () => {
             width: `500%`,
           }}
         >
-          <Satge1 stage={stage} updateFormFiled={updateFormFiled} nextStage={nextStage} />
+          <Satge1
+            stage={stage}
+            updateFormFiled={updateFormFiled}
+            nextStage={nextStage}
+          />
           <Satge2
             nextStage={nextStage}
             formData={formData}

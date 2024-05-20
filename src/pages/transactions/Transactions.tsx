@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/hooks";
-import { getAllTransactionsSelector } from "@/redux/actionsSlice";
+import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import Transaction from "./Transaction";
 import { useState } from "react";
 import {
@@ -49,8 +49,11 @@ const Transactions = () => {
 
   const [serachValue, setSearchValue] = useState("");
 
-  const { sortedTransactions, handleChangeSortedTransctions, handleChangeSearchValue } =
-    useSortingTransactions();
+  const {
+    sortedTransactions,
+    handleChangeSortedTransctions,
+    handleChangeSearchValue,
+  } = useSortingTransactions();
 
   if (allTransactions.length === 0) {
     return <div>Loading...</div>;
@@ -60,7 +63,11 @@ const Transactions = () => {
       <h1 className="  text-White text-4xl font-bold mb-8 ">Budgets</h1>
       <div className="mb-3 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%]  ">
         <div className="text-lg font-medium bg-RichGray rounded-md flex justify-between items-center w-[300px] h-12 p-0 ">
-          <img src="/magnifying-glass-solid.svg" alt="" className="w-4 m-4 mx-5 p-0" />
+          <img
+            src="/magnifying-glass-solid.svg"
+            alt=""
+            className="w-4 m-4 mx-5 p-0"
+          />
 
           <input
             value={serachValue}
@@ -146,7 +153,9 @@ const Transactions = () => {
             (currentPage - 1) * maxActionsInPage + maxActionsInPage
           )
           .map((transaction) => {
-            return <Transaction transaction={transaction} key={transaction._id} />;
+            return (
+              <Transaction transaction={transaction} key={transaction._id} />
+            );
           })}
       </div>
       <div className="my-2 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%] ">
@@ -171,7 +180,10 @@ const Transactions = () => {
               {Array.from({ length: maxPages }, (_, index) => {
                 if (index < 5) {
                   return (
-                    <PaginationItem onClick={() => setCurrentPage(index + 1)} key={index}>
+                    <PaginationItem
+                      onClick={() => setCurrentPage(index + 1)}
+                      key={index}
+                    >
                       <PaginationLink isActive={index + 1 === currentPage}>
                         {index + 1}
                       </PaginationLink>
@@ -184,7 +196,10 @@ const Transactions = () => {
                   defaultValue={maxActionsInPage.toString()}
                   onValueChange={(value) => setCurrentPage(Number(value))}
                 >
-                  <SelectTrigger className=" bg-RichGray" hidden></SelectTrigger>
+                  <SelectTrigger
+                    className=" bg-RichGray"
+                    hidden
+                  ></SelectTrigger>
                   <SelectContent className="bg-RichGray shadow-2xl">
                     {Array.from({ length: maxPages }, (_, index) => (
                       <SelectItem
@@ -199,7 +214,10 @@ const Transactions = () => {
                 </Select>
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext className="text-lg  " onClick={() => handleNextActionsPage()} />
+                <PaginationNext
+                  className="text-lg  "
+                  onClick={() => handleNextActionsPage()}
+                />
               </PaginationItem>
             </PaginationContent>
           </Pagination>

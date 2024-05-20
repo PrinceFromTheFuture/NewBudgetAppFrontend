@@ -7,10 +7,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Switch } from "@/components/ui/switch";
 import { useAppDispatch } from "@/hooks";
-import { getAllTransactions } from "@/redux/actionsSlice";
+import { getAllTransactions } from "@/redux/transactionsSlice";
 import { getAllBudgets } from "@/redux/userDataSlice";
 
 import { CaretSortIcon } from "@radix-ui/react-icons";
@@ -55,13 +59,19 @@ const DeleteTransaction = () => {
 
         <AlertDialogDescription>
           <div className=" mb-8">
-            this action will permenetly remove the transaction and delete the data asoociated with
-            it
+            this action will permenetly remove the transaction and delete the
+            data asoociated with it
           </div>
-          <Collapsible open={isCollapsableOpen} onOpenChange={setIsCollapsableOpen}>
+          <Collapsible
+            open={isCollapsableOpen}
+            onOpenChange={setIsCollapsableOpen}
+          >
             <div className=" flex justify-start gap-2 items-center">
               <Switch
-                checked={dataDeletingAdujustment.budgets && dataDeletingAdujustment.sources}
+                checked={
+                  dataDeletingAdujustment.budgets &&
+                  dataDeletingAdujustment.sources
+                }
                 onCheckedChange={() => {
                   setDataDataDeletingAdujustment({
                     budgets: !dataDeletingAdujustment.budgets,
@@ -69,7 +79,9 @@ const DeleteTransaction = () => {
                   });
                 }}
               />
-              <div className="leading-[0px] font-semibold text-RichGray">adjsut all data</div>
+              <div className="leading-[0px] font-semibold text-RichGray">
+                adjsut all data
+              </div>
               <CollapsibleTrigger>
                 <div className="hover:bg-FadedGray rounded-lg p-1 w-min cursor-pointer transition-all">
                   <CaretSortIcon className="h-6 w-6  " />
@@ -89,7 +101,9 @@ const DeleteTransaction = () => {
                     })
                   }
                 />
-                <div className="leading-[0px] font-semibold text-RichGray">adjust for Bdugets</div>
+                <div className="leading-[0px] font-semibold text-RichGray">
+                  adjust for Bdugets
+                </div>
               </div>
               <div className=" flex justify-start gap-2 items-center mt-2">
                 <Switch
@@ -101,7 +115,9 @@ const DeleteTransaction = () => {
                     })
                   }
                 />
-                <div className="leading-[0px] font-semibold text-RichGray">adjust for Sources</div>
+                <div className="leading-[0px] font-semibold text-RichGray">
+                  adjust for Sources
+                </div>
               </div>
             </CollapsibleContent>
           </Collapsible>
