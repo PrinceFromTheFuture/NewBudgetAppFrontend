@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "./hooks";
 import { getAllBudgets, getAllSources, login } from "./redux/userDataSlice";
@@ -7,6 +7,7 @@ import axios from "axios";
 
 import utc from "dayjs/plugin/utc";
 import dayjs from "dayjs";
+import { getAllCards } from "./redux/cardsSlice";
 
 dayjs.extend(utc);
 
@@ -15,6 +16,7 @@ const EntryPoint = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    dispatch(getAllCards());
     dispatch(getAllSources());
     dispatch(getAllTransactions());
     dispatch(getAllBudgets());

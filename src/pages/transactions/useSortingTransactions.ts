@@ -10,15 +10,7 @@ type BudgetFilters = {
   isChecked: boolean;
 }[];
 
-interface MinMaxPriceRange {
-  min: number;
-  max: number;
-}
-
-const useSortingTransactions = (
-  budgetsFilters: BudgetFilters,
-  minMaxPriceRange: MinMaxPriceRange
-) => {
+const useSortingTransactions = (budgetsFilters: BudgetFilters) => {
   const allTransactions = useAppSelector(getAllTransactionsSelector);
   const currentBudget = useAppSelector(getCurrentBudget);
   const [sortedTransactions, setSortedTransactions] = useState(allTransactions);
@@ -27,6 +19,7 @@ const useSortingTransactions = (
     outcome: 1,
     income: 2,
   };
+
   let budgetCategoriesOrder = {};
   if (currentBudget)
     currentBudget.categories.forEach((category, index) => {

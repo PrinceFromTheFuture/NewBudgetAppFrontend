@@ -1,27 +1,12 @@
 import ArrowDown from "@/components/ArrowDown";
 import ArrowUp from "@/components/ArrowUp";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogAction,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks";
 import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import { getCurrentBudget } from "@/redux/userDataSlice";
 import dayjs from "dayjs";
-import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteTransaction from "./DeleteTransaction";
 import EditTransaction from "./EditTransaction";

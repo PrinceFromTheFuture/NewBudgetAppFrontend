@@ -1,9 +1,5 @@
-import { useAppDispatch } from "@/hooks";
 import { cn } from "@/lib/utils";
-import { getAllTransactions } from "@/redux/transactionsSlice";
-import { getAllBudgets, getAllSources, login } from "@/redux/userDataSlice";
 import axios from "axios";
-import { useEffect } from "react";
 import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
 
 function Root() {

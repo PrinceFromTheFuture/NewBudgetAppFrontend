@@ -37,8 +37,8 @@ import { actionInteface } from "@/types";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import axios from "axios";
 import dayjs from "dayjs";
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const EditTransaction = () => {
   const [isCollapsableOpen, setIsCollapsableOpen] = useState(false);
@@ -47,7 +47,6 @@ const EditTransaction = () => {
     sources: true,
   });
   const { transactionId } = useParams();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const allTransactions: actionInteface[] | null = useAppSelector(

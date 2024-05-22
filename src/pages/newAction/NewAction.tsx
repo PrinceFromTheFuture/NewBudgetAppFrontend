@@ -1,5 +1,5 @@
 // MultiStageForm.js
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Satge1 from "./Satge1";
 import Satge2 from "./Stage2";
 import Satge3 from "./Stage3";

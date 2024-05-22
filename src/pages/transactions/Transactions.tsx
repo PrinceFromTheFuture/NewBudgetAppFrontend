@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/hooks";
 import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import Transaction from "./Transaction";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -24,8 +24,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { getAllBudgetsSelector } from "@/redux/userDataSlice";
-import { Checkbox } from "@/components/ui/checkbox";
-import { find } from "node_modules/@reduxjs/toolkit/dist/utils";
 const Transactions = () => {
   const allTransactions = useAppSelector(getAllTransactionsSelector);
   const allBudgets = useAppSelector(getAllBudgetsSelector);
@@ -102,10 +100,7 @@ const Transactions = () => {
     sortedTransactions,
     handleChangeSortedTransctions,
     handleChangeSearchValue,
-  } = useSortingTransactions(budgetsFilters, {
-    min: minPriceRange,
-    max: maxPriceRange,
-  });
+  } = useSortingTransactions(budgetsFilters);
 
   if (allTransactions.length === 0 || allBudgets.length === 0) {
     return <div>Loading...</div>;
