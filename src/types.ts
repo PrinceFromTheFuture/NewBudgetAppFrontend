@@ -25,6 +25,7 @@ export interface BudgetCategory {
 }
 
 export interface budgetInterface {
+  _id: string;
   user: string;
   start: string;
   end: string;

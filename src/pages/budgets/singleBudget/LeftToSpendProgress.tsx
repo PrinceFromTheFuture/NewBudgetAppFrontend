@@ -1,8 +1,8 @@
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useAppSelector } from "@/hooks";
+import { Card, CardContent, CardHeader } from "../../../components/ui/card";
+import { useAppSelector } from "../../../hooks";
 
-import { getCurrentBudget } from "@/redux/userDataSlice";
+import { getCurrentBudget } from "../../../redux/userDataSlice";
 
 ChartJS.register(ArcElement, Tooltip);
 
@@ -22,7 +22,9 @@ const LeftToSpendProgress = () => {
         <div className="flex justify-between  ">
           <div>
             {" "}
-            <div className="tracking-tight text-White text-2xl font-bold">Limit</div>
+            <div className="tracking-tight text-White text-2xl font-bold">
+              Limit
+            </div>
             <div className="font-semibold text-DimGray">Spendings By Now </div>
           </div>
         </div>
@@ -52,7 +54,9 @@ const LeftToSpendProgress = () => {
                   Math.PI *
                     75 *
                     2 *
-                    (totalSpent / totalScheduled >= 1 ? 1 : totalSpent / totalScheduled)
+                    (totalSpent / totalScheduled >= 1
+                      ? 1
+                      : totalSpent / totalScheduled)
                 }
                 strokeDasharray={Math.PI * 75 * 2}
               ></circle>

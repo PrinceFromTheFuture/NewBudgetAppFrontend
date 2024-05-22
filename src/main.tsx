@@ -7,12 +7,14 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import { NewAction } from "./pages/newAction/NewAction.tsx";
-import Budgets from "./pages/budgets/Budgets.tsx";
+import BudgetsOutlet from "./pages/budgets/BudgetsOutlet.tsx";
 import Login from "./pages/login/Login.tsx";
 import Transactions from "./pages/transactions/Transactions.tsx";
 import SingleTransaction from "./pages/singleTransaction/SingleTransaction.tsx";
 import EntryPoint from "./EntryPoint.tsx";
 import SourcesAndCards from "./pages/sourcesAndCards/SourcesAndCards.tsx";
+import SingleBudget from "./pages/budgets/singleBudget/SingleBudgets.tsx";
+import AllBudgets from "./pages/budgets/allBudgets/AllBudgets.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,17 @@ const router = createBrowserRouter([
         element: <Root />,
         children: [
           { path: "/dashboard", element: <Dashboard /> },
-          { path: "/budgets", element: <Budgets /> },
+          {
+            path: "/budgets",
+            element: <BudgetsOutlet />,
+            children: [
+              {
+                path: "/budgets/SingleBudget/:budgetId",
+                element: <SingleBudget />,
+              },
+              { path: "/budgets", element: <AllBudgets /> },
+            ],
+          },
           { path: "/transactions", element: <Transactions /> },
           { path: "/sourcesAndCards", element: <SourcesAndCards /> },
         ],

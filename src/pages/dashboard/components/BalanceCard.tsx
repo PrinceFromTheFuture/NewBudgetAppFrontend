@@ -14,17 +14,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAppSelector } from "@/hooks";
-import {
-  getBalancesSelector,
-  getTodaysProfitSelector,
-} from "@/redux/userDataSlice";
+import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
+import { getAllSourcesSelector } from "@/redux/userDataSlice";
+import dayjs from "dayjs";
+
 import { useState } from "react";
 
 const BalanceCard = () => {
   const [isNet, setIsNet] = useState(false);
 
-  const userBalances = useAppSelector(getBalancesSelector);
-  const todayProfit = useAppSelector(getTodaysProfitSelector);
+  const allSources = useAppSelector(getAllSourcesSelector);
+  const allTransactions = useAppSelector(getAllTransactionsSelector);
+
+  if (allSources.length === 0 || allTransactions.length === 0) {
+    return <div>Loasings....</div>;
+  }
+
+  const balance = allSources
+    .map((source) => source.balance)
+    .reduce((inc, amount) => inc + amount);
+
+  const now = dayjs();
+
+  const todaysChange = allTransactions
+    .filter((transaction) => dayjs(transaction.date).isSame(now, "day"))
+    .map((transaction) => transaction.amount)
+    .reduce((inc, amount) => (inc -= amount), 0);
 
   return (
     <Card className="bg-Purple w-[350px] h-[270px]">
@@ -54,15 +69,10 @@ const BalanceCard = () => {
         <div className="text-xl font-semibold">Total Balance</div>
 
         <div className="text-4xl font-extrabold">
-          {isNet ? userBalances.grossBalance : userBalances.netBalance}
+          {isNet ? balance : balance}
           <span className="  font-black">₪</span>
         </div>
-        {!isNet && (
-          <div className="text-lg  bg-DeepGray/20  px-3 text-Dbg-DeepGray mt-2 font-bold">
-            {todayProfit}
-          </div>
-        )}
-        {String(isNet)}
+        <div> Todays's change {todaysChange}₪ </div>
       </CardContent>
     </Card>
   );

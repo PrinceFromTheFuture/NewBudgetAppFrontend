@@ -3,9 +3,22 @@ import { getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import { getCurrentBudget } from "@/redux/userDataSlice";
 import { actionInteface } from "@/types";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const useSortingTransactions = () => {
+type BudgetFilters = {
+  cateogyName: string;
+  isChecked: boolean;
+}[];
+
+interface MinMaxPriceRange {
+  min: number;
+  max: number;
+}
+
+const useSortingTransactions = (
+  budgetsFilters: BudgetFilters,
+  minMaxPriceRange: MinMaxPriceRange
+) => {
   const allTransactions = useAppSelector(getAllTransactionsSelector);
   const currentBudget = useAppSelector(getCurrentBudget);
   const [sortedTransactions, setSortedTransactions] = useState(allTransactions);
@@ -15,9 +28,10 @@ const useSortingTransactions = () => {
     income: 2,
   };
   let budgetCategoriesOrder = {};
-  currentBudget.categories.forEach((category, index) => {
-    budgetCategoriesOrder[category.name] = index;
-  });
+  if (currentBudget)
+    currentBudget.categories.forEach((category, index) => {
+      budgetCategoriesOrder[category.name] = index;
+    });
 
   const allSortingFilters = {
     budget: (actionA: actionInteface, actionB: actionInteface) => {
@@ -63,6 +77,27 @@ const useSortingTransactions = () => {
     });
     setSortedTransactions(newSortedTransactions);
   };
+
+  useEffect(() => {
+    const isAllClear = budgetsFilters.every(
+      (budgetFilter) => !budgetFilter.isChecked
+    );
+    if (isAllClear) {
+      setSortedTransactions(allTransactions);
+      return;
+    }
+
+    const newSortedTransactions = allTransactions
+      .slice()
+      .filter((transaction) => {
+        for (const budgetFilter of budgetsFilters) {
+          if (transaction.budgetCategory === budgetFilter.cateogyName) {
+            return budgetFilter.isChecked;
+          }
+        }
+      });
+    setSortedTransactions(newSortedTransactions);
+  }, [budgetsFilters]);
 
   return {
     sortedTransactions,

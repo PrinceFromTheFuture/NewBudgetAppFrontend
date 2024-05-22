@@ -5,27 +5,33 @@ import axios from "axios";
 import dayjs from "dayjs";
 interface userDataSliceInterface {
   username: string | null;
-  balances: {
-    netBalance: number;
-    grossBalance: number;
-  };
-  todayProfit: string;
 
   sources: sourceInterface[];
   budgets: budgetInterface[];
 }
 
-export const getAllSources = createAsyncThunk("userData/getAllSources", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_BASE_API}/sources`);
-  return response.data;
-});
+export const getAllSources = createAsyncThunk(
+  "userData/getAllSources",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BASE_API}/sources`
+    );
+    return response.data;
+  }
+);
 
-export const getAllBudgets = createAsyncThunk("userData/getAllBudgets", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_BASE_API}/budgets`, {
-    withCredentials: true,
-  });
-  return response.data;
-});
+export const getAllBudgets = createAsyncThunk(
+  "userData/getAllBudgets",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BASE_API}/budgets`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  }
+);
 
 export interface submittingBudgetInterface {
   start: string;
@@ -40,20 +46,20 @@ export interface submittingBudgetInterface {
 export const submitNewBudget = createAsyncThunk(
   "userData/budgets/new",
   async (budgetData: submittingBudgetInterface) => {
-    const response = await axios.post(`${import.meta.env.VITE_BASE_API}/budgets`, budgetData, {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_API}/budgets`,
+      budgetData,
+      {
+        withCredentials: true,
+      }
+    );
     return response.data;
   }
 );
 
 const initialState: userDataSliceInterface = {
   username: null,
-  balances: {
-    netBalance: 235.23,
-    grossBalance: 1234.13,
-  },
-  todayProfit: "123$ (4%)",
+
   sources: [],
   budgets: [],
 };
@@ -63,9 +69,6 @@ const userDataSlice = createSlice({
   initialState,
 
   reducers: {
-    updateNetBalance(state, action: PayloadAction<number>) {
-      state.balances.grossBalance = action.payload;
-    },
     login(state, action: PayloadAction<string>) {
       state.username = action.payload;
     },
@@ -85,13 +88,17 @@ const userDataSlice = createSlice({
 
 export const userDataReducer = userDataSlice.reducer;
 
-export const { updateNetBalance, login } = userDataSlice.actions;
+export const { login } = userDataSlice.actions;
 
-export const getBalancesSelector = (state: RootState) => state.userData.balances;
-export const getTodaysProfitSelector = (state: RootState) => state.userData.todayProfit;
-export const getAllSourcesSelector = (state: RootState) => state.userData.sources;
+export const getAllSourcesSelector = (state: RootState) =>
+  state.userData.sources;
 
-export const getAllBudgetsSelector = (state: RootState) => state.userData.budgets;
+export const getAllBudgetsSelector = (state: RootState) =>
+  state.userData.budgets;
+export const getSingleBudgetByIdSelector = (
+  state: RootState,
+  budgetId: string
+) => state.userData.budgets.find((budget) => budget._id === budgetId)!;
 
 export const getCurrentBudget = (state: RootState) => {
   const now = dayjs();
@@ -105,4 +112,5 @@ export const getCurrentBudget = (state: RootState) => {
   }
 };
 
-export const getUsernameSelector = (state: RootState) => state.userData.username;
+export const getUsernameSelector = (state: RootState) =>
+  state.userData.username;
