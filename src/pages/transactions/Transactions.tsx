@@ -18,15 +18,21 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { getAllBudgetsSelector } from "@/redux/userDataSlice";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { getAllBudgetsSelector, getAllSourcesSelector } from "@/redux/userDataSlice";
 const Transactions = () => {
-  const allTransactions = useAppSelector(getAllTransactionsSelector);
+  const allTransactionsUnTocuhed = useAppSelector(getAllTransactionsSelector);
   const allBudgets = useAppSelector(getAllBudgetsSelector);
+  const allSources = useAppSelector(getAllSourcesSelector);
+  const allTransactions = allTransactionsUnTocuhed.slice().map((transaction) => {
+    if (transaction.source) {
+      const transactionSource = allSources.find((source) => source._id === transaction.source);
+
+      return { ...transaction, source: transactionSource!.name };
+    } else {
+      return transaction;
+    }
+  });
 
   const [maxActionsInPage, setMaxActionsInPage] = useState(10);
   const [maxPages, setMaxPages] = useState(
@@ -65,10 +71,7 @@ const Transactions = () => {
       .flat()
   );
 
-  const handleBudgetsFiltersCheckboxChnage = (
-    budgetCategoryName: string,
-    newValue: boolean
-  ) => {
+  const handleBudgetsFiltersCheckboxChnage = (budgetCategoryName: string, newValue: boolean) => {
     const newBudgetFilters = budgetsFilters.map((categoryNameObject) => {
       if (categoryNameObject.cateogyName === budgetCategoryName) {
         return {
@@ -96,11 +99,8 @@ const Transactions = () => {
     allTransactions.slice().sort((a, b) => b.amount - a.amount)[0].amount
   );
 
-  const {
-    sortedTransactions,
-    handleChangeSortedTransctions,
-    handleChangeSearchValue,
-  } = useSortingTransactions(budgetsFilters);
+  const { sortedTransactions, handleChangeSortedTransctions, handleChangeSearchValue } =
+    useSortingTransactions(budgetsFilters);
 
   if (allTransactions.length === 0 || allBudgets.length === 0) {
     return <div>Loading...</div>;
@@ -111,11 +111,7 @@ const Transactions = () => {
       <div className="mb-3 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%]  ">
         <div className="w-full flex justify-start items-center gap-3">
           <div className="text-lg font-medium bg-RichGray rounded-md flex justify-between items-center w-[300px] h-12 p-0 ">
-            <img
-              src="/magnifying-glass-solid.svg"
-              alt=""
-              className="w-4 m-4 mx-5 p-0"
-            />
+            <img src="/magnifying-glass-solid.svg" alt="" className="w-4 m-4 mx-5 p-0" />
 
             <input
               value={serachValue}
@@ -149,10 +145,7 @@ const Transactions = () => {
                           )?.isChecked
                         }
                         onChange={(event) =>
-                          handleBudgetsFiltersCheckboxChnage(
-                            category.name,
-                            event.target.checked
-                          )
+                          handleBudgetsFiltersCheckboxChnage(category.name, event.target.checked)
                         }
                         id={category.name}
                         name={category.name}
@@ -177,8 +170,7 @@ const Transactions = () => {
           </Popover>
           <Popover>
             <PopoverTrigger className="h-12 bg-RichGray rounded-md px-3 flex justify-center gap-2 items-center">
-              Range from: {minPriceRange.toFixed(2)}₪ to{" "}
-              {maxPriceRange.toFixed(2)}₪
+              Range from: {minPriceRange.toFixed(2)}₪ to {maxPriceRange.toFixed(2)}₪
             </PopoverTrigger>
             <PopoverContent className="flex justify-between items-center bg-RichGray">
               <div>
@@ -186,9 +178,7 @@ const Transactions = () => {
                   <label htmlFor="min">min</label>
                 </div>
                 <input
-                  onChange={(event) =>
-                    setMinPriceRange(Number(event.target.value))
-                  }
+                  onChange={(event) => setMinPriceRange(Number(event.target.value))}
                   type="number"
                   min={0}
                   value={minPriceRange}
@@ -202,9 +192,7 @@ const Transactions = () => {
                   <label htmlFor="max">max</label>
                 </div>
                 <input
-                  onChange={(event) =>
-                    setMaxPriceRange(Number(event.target.value))
-                  }
+                  onChange={(event) => setMaxPriceRange(Number(event.target.value))}
                   value={maxPriceRange}
                   type="number"
                   min={0}
@@ -217,9 +205,7 @@ const Transactions = () => {
                 onClick={() => {
                   setMinPriceRange(0);
                   setMaxPriceRange(
-                    allTransactions
-                      .slice()
-                      .sort((a, b) => b.amount - a.amount)[0].amount
+                    allTransactions.slice().sort((a, b) => b.amount - a.amount)[0].amount
                   );
                 }}
                 className=" mt-2  font-bold hover:bg-DimGray transition-all rounded-md text-White cursor-pointer  p-1 px-2 mx-3 text-center"
@@ -303,9 +289,7 @@ const Transactions = () => {
             (currentPage - 1) * maxActionsInPage + maxActionsInPage
           )
           .map((transaction) => {
-            return (
-              <Transaction transaction={transaction} key={transaction._id} />
-            );
+            return <Transaction transaction={transaction} key={transaction._id} />;
           })}
       </div>
       <div className="my-2 h-10 flex justify-between items-end text-md text-FadedGray  font-medium w-[98%] ">
@@ -330,10 +314,7 @@ const Transactions = () => {
               {Array.from({ length: maxPages }, (_, index) => {
                 if (index < 5) {
                   return (
-                    <PaginationItem
-                      onClick={() => setCurrentPage(index + 1)}
-                      key={index}
-                    >
+                    <PaginationItem onClick={() => setCurrentPage(index + 1)} key={index}>
                       <PaginationLink isActive={index + 1 === currentPage}>
                         {index + 1}
                       </PaginationLink>
@@ -346,10 +327,7 @@ const Transactions = () => {
                   defaultValue={maxActionsInPage.toString()}
                   onValueChange={(value) => setCurrentPage(Number(value))}
                 >
-                  <SelectTrigger
-                    className=" bg-RichGray"
-                    hidden
-                  ></SelectTrigger>
+                  <SelectTrigger className=" bg-RichGray" hidden></SelectTrigger>
                   <SelectContent className="bg-RichGray shadow-2xl">
                     {Array.from({ length: maxPages }, (_, index) => (
                       <SelectItem
@@ -364,10 +342,7 @@ const Transactions = () => {
                 </Select>
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext
-                  className="text-lg  "
-                  onClick={() => handleNextActionsPage()}
-                />
+                <PaginationNext className="text-lg  " onClick={() => handleNextActionsPage()} />
               </PaginationItem>
             </PaginationContent>
           </Pagination>

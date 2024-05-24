@@ -4,8 +4,8 @@ import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
 
 function Root() {
   const navigate = useNavigate();
-
   const location = useLocation();
+
   const routes: { path: string; iconPath: string; name: string }[] = [
     { path: "/", iconPath: "3", name: "Home" },
     { path: "/transactions", iconPath: "3", name: "Transactions" },
@@ -22,12 +22,9 @@ function Root() {
         <div
           className="cursor-pointer flex-end w-full  bg-RichGray p-2 flex justify-center items-center rounded-md font-semibold"
           onClick={async () => {
-            const respose = await axios.get(
-              `${import.meta.env.VITE_BASE_API}/auth/logout`,
-              {
-                withCredentials: true,
-              }
-            );
+            const respose = await axios.get(`${import.meta.env.VITE_BASE_API}/auth/logout`, {
+              withCredentials: true,
+            });
             if ((respose.status = 200)) {
               navigate("/login");
             }

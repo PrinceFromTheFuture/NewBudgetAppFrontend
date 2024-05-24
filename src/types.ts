@@ -4,8 +4,27 @@ export interface actionInteface {
   date: string;
   amount: number;
   budgetCategory: string;
-  source: string;
+  source?: string;
+  card?: string;
   _id: string;
+}
+
+export interface Card {
+  amountUsed: number;
+  name: string;
+  associatedSource: string;
+  resetDay: number;
+  limit: number;
+  _id: string;
+}
+export interface transactionForm {
+  title: string;
+  type: "income" | "outcome" | "transaction";
+  date: string;
+  amount: number | undefined;
+  budget: string;
+  source?: string;
+  card?: string;
 }
 
 export interface sourceInterface {

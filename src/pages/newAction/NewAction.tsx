@@ -5,12 +5,12 @@ import Satge2 from "./Stage2";
 import Satge3 from "./Stage3";
 import Satge5 from "./Stage5";
 import Satge4 from "./Stage4";
-import { actionInteface } from "@/types";
+import { actionInteface, transactionForm } from "@/types";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { getAllTransactions } from "@/redux/transactionsSlice";
 import { useNavigate } from "react-router-dom";
-import { getCurrentBudget } from "@/redux/userDataSlice";
+import { getAllSourcesSelector, getCurrentBudget } from "@/redux/userDataSlice";
 import dayjs from "dayjs";
 
 export const NewAction = () => {
@@ -18,6 +18,8 @@ export const NewAction = () => {
 
   const [stage, setStage] = useState(1);
   const dispatch = useAppDispatch();
+
+  const allSources = useAppSelector(getAllSourcesSelector);
 
   const totalStages = 5; // Adjust as per your form stages
 
@@ -33,29 +35,29 @@ export const NewAction = () => {
     }
   };
 
-  const [formData, setFormData] = useState<{
-    title: string;
-    type: "income" | "outcome" | "transaction";
-    date: string;
-    amount: number | undefined;
-    budget: string;
-    source: string;
-  }>({
+  const [formData, setFormData] = useState<transactionForm>({
     title: "",
-    source: "",
+    source: undefined,
     budget: "",
     amount: undefined,
     date: dayjs().format("YYYY-MM-DDTHH:mm"),
     type: "income",
+    card: undefined,
   });
 
   const updateFormFiled = (
     field: keyof actionInteface, // Use keyof to ensure field matches keys of newActionFormInteface
-    value: string | number
+    value: string | number | undefined
   ) => {
     let newFormData = { ...formData }; // Explicitly declare type
+
     (newFormData[field] as any) = value;
-    // Update state
+    if (field === "card") {
+      newFormData.source = undefined;
+    }
+    if (field === "source") {
+      newFormData.card = undefined;
+    }
     setFormData(newFormData);
   };
 
@@ -79,10 +81,7 @@ export const NewAction = () => {
       <div>
         {" "}
         <div className="w-full flex justify-start items-center">
-          <div
-            onClick={() => navigate(-1)}
-            className="p-3 bg-RichGray rounded cursor-pointer"
-          >
+          <div onClick={() => navigate(-1)} className="p-3 bg-RichGray rounded cursor-pointer">
             Back
           </div>
         </div>
@@ -102,11 +101,7 @@ export const NewAction = () => {
             width: `500%`,
           }}
         >
-          <Satge1
-            stage={stage}
-            updateFormFiled={updateFormFiled}
-            nextStage={nextStage}
-          />
+          <Satge1 stage={stage} updateFormFiled={updateFormFiled} nextStage={nextStage} />
           <Satge2
             nextStage={nextStage}
             formData={formData}

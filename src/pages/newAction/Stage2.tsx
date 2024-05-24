@@ -1,39 +1,25 @@
 import StageWraper from "./StageWraper";
-import { actionInteface } from "@/types";
+import { actionInteface, transactionForm } from "@/types";
 import dayjs from "dayjs";
 import { useRef } from "react";
 
 interface stage2PropsInterface {
   stage: number;
-  formData: {
-    title: string;
-    type: "income" | "outcome" | "transaction";
-    date: string;
-    amount: number | undefined;
-    budget: string;
-    source: string;
-  };
+  formData: transactionForm;
   updateFormFiled: (
     field: keyof actionInteface, // Use keyof to ensure field matches keys of newActionFormInteface
-    value: string | number
+    value: string | number | undefined
   ) => void;
   nextStage: () => void;
 }
 
-const Satge2 = ({
-  stage,
-  formData,
-  updateFormFiled,
-  nextStage,
-}: stage2PropsInterface) => {
+const Satge2 = ({ stage, formData, updateFormFiled, nextStage }: stage2PropsInterface) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <StageWraper stage={2} currentStage={stage}>
       <div className="flex flex-col justify-normal items-center w-full">
-        <div className="text-3xl mb-5 ml-5 font-extrabold">
-          When did your Action occured?
-        </div>
+        <div className="text-3xl mb-5 ml-5 font-extrabold">When did your Action occured?</div>
         <input
           type="datetime-local"
           name="date"
@@ -45,7 +31,8 @@ const Satge2 = ({
             if (e.key === "Set") {
               nextStage();
             }
-          }}yyyy-MM-ddThh:mm
+          }}
+          yyyy-MM-ddThh:mm
           value={formData.date}
         />
         <div className=" w-full flex justify-between items-center gap-3 h-20">
@@ -57,9 +44,7 @@ const Satge2 = ({
                 <div className="text-White text-md font-extrabold">
                   {dayjs(formData.date).format("DD/MM/YYYY HH:mm")}
                 </div>
-                <div className=" text-FadedGray text-sm font-bold">
-                  Calender
-                </div>
+                <div className=" text-FadedGray text-sm font-bold">Calender</div>
               </div>
             </div>
           </div>

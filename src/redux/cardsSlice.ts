@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "./store";
+import { Card } from "@/types";
 
 export const getAllCards = createAsyncThunk("cards/getAll", async () => {
   const response = await axios.get(`${import.meta.env.VITE_BASE_API}/cards`, {
@@ -9,14 +10,6 @@ export const getAllCards = createAsyncThunk("cards/getAll", async () => {
   return response.data;
 });
 
-interface Card {
-  amountUsed: number;
-  name: string;
-  associatedSource: string;
-  resetDay: number;
-  limit: number;
-  _id: string;
-}
 const initialState: Card[] = [];
 
 const cardsSlice = createSlice({
@@ -24,12 +17,9 @@ const cardsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      getAllCards.fulfilled,
-      (_, action: PayloadAction<Card[]>) => {
-        return action.payload;
-      }
-    );
+    builder.addCase(getAllCards.fulfilled, (_, action: PayloadAction<Card[]>) => {
+      return action.payload;
+    });
   },
 });
 

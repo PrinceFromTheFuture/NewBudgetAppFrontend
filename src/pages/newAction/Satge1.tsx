@@ -8,7 +8,7 @@ interface stage1PropsInterface {
   stage: number;
   updateFormFiled: (
     field: keyof actionInteface, // Use keyof to ensure field matches keys of actionInteface
-    value: string | number
+    value: string | number | undefined
   ) => void;
   nextStage: () => void;
 }

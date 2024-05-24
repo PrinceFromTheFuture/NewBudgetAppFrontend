@@ -1,30 +1,18 @@
 import StageWraper from "./StageWraper";
-import { actionInteface } from "@/types";
+import { actionInteface, transactionForm } from "@/types";
 import { useEffect, useRef } from "react";
 
 interface stage5PropsInterface {
   stage: number;
-  formData: {
-    title: string;
-    type: "income" | "outcome" | "transaction";
-    date: string;
-    amount: number | undefined;
-    budget: string;
-    source: string;
-  };
+  formData: transactionForm;
   updateFormFiled: (
     field: keyof actionInteface, // Use keyof to ensure field matches keys of newActionFormInteface
-    value: string | number
+    value: string | number | undefined
   ) => void;
   nextStage: () => void;
 }
 
-const Satge5 = ({
-  stage,
-  formData,
-  updateFormFiled,
-  nextStage,
-}: stage5PropsInterface) => {
+const Satge5 = ({ stage, formData, updateFormFiled, nextStage }: stage5PropsInterface) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

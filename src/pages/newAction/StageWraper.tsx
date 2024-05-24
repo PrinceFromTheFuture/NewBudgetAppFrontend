@@ -13,7 +13,7 @@ const StageWraper = ({
   return (
     <div
       className={cn(
-        "w-[100%]   h-full  transition-all duration-200  select-none flex justify-center items-center",
+        "w-full   h-full  transition-all duration-200  select-none flex justify-center items-center",
         stage === currentStage ? "opacity-100" : "opacity-0"
       )}
     >
