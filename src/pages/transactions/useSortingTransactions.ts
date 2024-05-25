@@ -15,13 +15,7 @@ const useSortingTransactions = (budgetsFilters: BudgetFilters) => {
 
   const allTransactionsUnTocuhed = useAppSelector(getAllTransactionsSelector);
   const allTransactions = allTransactionsUnTocuhed.slice().map((transaction) => {
-    if (transaction.source) {
-      const transactionSource = allSources.find((source) => source._id === transaction.source);
-
-      return { ...transaction, source: transactionSource!.name };
-    } else {
-      return transaction;
-    }
+    return transaction;
   });
   const currentBudget = useAppSelector(getCurrentBudget);
   const [sortedTransactions, setSortedTransactions] = useState(allTransactions);

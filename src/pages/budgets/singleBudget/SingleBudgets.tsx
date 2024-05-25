@@ -10,6 +10,15 @@ import {
 import NewBudget from "../allBudgets/NewBudget";
 import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { LegacyRef, useRef, useState } from "react";
+import DayByDayOverview from "./DayByDayOverview";
 
 const SingleBudget = () => {
   const { budgetId } = useParams();
@@ -35,6 +44,7 @@ const SingleBudget = () => {
         <BudegtDistribution />
         <LeftToSpendProgress />
       </div>
+      <DayByDayOverview />
     </div>
   );
 };

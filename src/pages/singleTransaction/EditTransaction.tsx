@@ -7,11 +7,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Select,
   SelectContent,
@@ -23,10 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-  getAllTransactions,
-  getAllTransactionsSelector,
-} from "@/redux/transactionsSlice";
+import { getAllTransactions, getAllTransactionsSelector } from "@/redux/transactionsSlice";
 import {
   getAllBudgets,
   getAllSources,
@@ -49,13 +42,9 @@ const EditTransaction = () => {
   const { transactionId } = useParams();
   const dispatch = useAppDispatch();
 
-  const allTransactions: actionInteface[] | null = useAppSelector(
-    getAllTransactionsSelector
-  );
+  const allTransactions: actionInteface[] | null = useAppSelector(getAllTransactionsSelector);
 
-  const singleTransaction = allTransactions.find(
-    (transction) => transction._id === transactionId
-  )!;
+  const singleTransaction = allTransactions.find((transction) => transction._id === transactionId)!;
 
   const currentBudget = useAppSelector(getCurrentBudget);
   const allSources = useAppSelector(getAllSourcesSelector);
@@ -76,7 +65,6 @@ const EditTransaction = () => {
   };
 
   const handleSaveUpdate = async () => {
-    console.log(formData);
     await axios.patch(
       `${import.meta.env.VITE_BASE_API}/transactions/${transactionId}`,
       {
@@ -149,9 +137,7 @@ const EditTransaction = () => {
           <label htmlFor="budget" className="mb-2 font-medium text-base">
             Budget Cateory
           </label>
-          <Select
-            onValueChange={(value) => updateFormFiled("budgetCategory", value)}
-          >
+          <Select onValueChange={(value) => updateFormFiled("budgetCategory", value)}>
             <SelectTrigger className="w-[180px] bg-FadedGray text-DeepGray">
               <SelectValue
                 defaultValue={formData.budgetCategory}
@@ -160,9 +146,7 @@ const EditTransaction = () => {
             </SelectTrigger>
             <SelectContent className="bg-FadedGray text-DeepGray">
               <SelectGroup>
-                <SelectLabel className="text-RichGray font-bold">
-                  Budget Cateory
-                </SelectLabel>
+                <SelectLabel className="text-RichGray font-bold">Budget Cateory</SelectLabel>
                 {currentBudget.categories.map((cateory) => {
                   return (
                     <SelectItem key={cateory.color} value={cateory.name}>
@@ -180,19 +164,14 @@ const EditTransaction = () => {
           </label>
           <Select onValueChange={(value) => updateFormFiled("source", value)}>
             <SelectTrigger className="w-[180px] bg-FadedGray text-DeepGray">
-              <SelectValue
-                defaultValue={formData.source}
-                placeholder={formData.source}
-              />
+              <SelectValue defaultValue={formData.source} placeholder={formData.source} />
             </SelectTrigger>
             <SelectContent className="bg-FadedGray text-DeepGray">
               <SelectGroup>
-                <SelectLabel className="text-RichGray font-bold">
-                  Source
-                </SelectLabel>
+                <SelectLabel className="text-RichGray font-bold">Source</SelectLabel>
                 {allSources.map((cateory) => {
                   return (
-                    <SelectItem key={cateory.color} value={cateory.name}>
+                    <SelectItem key={cateory.color} value={cateory._id}>
                       {cateory.name}
                     </SelectItem>
                   );
@@ -207,16 +186,11 @@ const EditTransaction = () => {
           </label>
           <Select onValueChange={(value) => updateFormFiled("type", value)}>
             <SelectTrigger className="w-[180px] bg-FadedGray text-DeepGray">
-              <SelectValue
-                defaultValue={formData.type}
-                placeholder={formData.type}
-              />
+              <SelectValue defaultValue={formData.type} placeholder={formData.type} />
             </SelectTrigger>
             <SelectContent className="bg-FadedGray text-DeepGray">
               <SelectGroup>
-                <SelectLabel className="text-RichGray font-bold">
-                  Source
-                </SelectLabel>
+                <SelectLabel className="text-RichGray font-bold">Source</SelectLabel>
                 <SelectItem value="outcome">outcome</SelectItem>
                 <SelectItem value="inceome">income</SelectItem>
               </SelectGroup>
@@ -225,16 +199,10 @@ const EditTransaction = () => {
         </div>
 
         <AlertDialogDescription>
-          <Collapsible
-            open={isCollapsableOpen}
-            onOpenChange={setIsCollapsableOpen}
-          >
+          <Collapsible open={isCollapsableOpen} onOpenChange={setIsCollapsableOpen}>
             <div className=" flex justify-start gap-2 items-center">
               <Switch
-                checked={
-                  dataUpdatingAdujustment.budgets &&
-                  dataUpdatingAdujustment.sources
-                }
+                checked={dataUpdatingAdujustment.budgets && dataUpdatingAdujustment.sources}
                 onCheckedChange={() => {
                   setDataDataDeletingAdujustment({
                     budgets: !dataUpdatingAdujustment.budgets,
@@ -242,9 +210,7 @@ const EditTransaction = () => {
                   });
                 }}
               />
-              <div className="leading-[0px] font-semibold text-RichGray">
-                adjsut all data
-              </div>
+              <div className="leading-[0px] font-semibold text-RichGray">adjsut all data</div>
               <CollapsibleTrigger>
                 <div className="hover:bg-FadedGray rounded-lg p-1 w-min cursor-pointer transition-all">
                   <CaretSortIcon className="h-6 w-6  " />
@@ -263,9 +229,7 @@ const EditTransaction = () => {
                     })
                   }
                 />
-                <div className="leading-[0px] font-semibold text-RichGray">
-                  adjust for Bdugets
-                </div>
+                <div className="leading-[0px] font-semibold text-RichGray">adjust for Bdugets</div>
               </div>
               <div className=" flex justify-start gap-2 items-center mt-2">
                 <Switch
@@ -277,9 +241,7 @@ const EditTransaction = () => {
                     })
                   }
                 />
-                <div className="leading-[0px] font-semibold text-RichGray">
-                  adjust for Sources
-                </div>
+                <div className="leading-[0px] font-semibold text-RichGray">adjust for Sources</div>
               </div>
             </CollapsibleContent>
           </Collapsible>
